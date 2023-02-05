@@ -7,21 +7,20 @@ import {
 import React from "react";
 import { useEffect } from "react";
 import { useTypewriter, Cursor } from "react-simple-typewriter";
-import { useSpring, animated } from "react-spring";
 import Image from "next/image";
 import logo from "../public/logo_final.svg";
 
-const Loader = () => {
+function Loader() {
   const [showElement, setShowElement] = React.useState(true);
   useEffect(() => {
     setTimeout(function () {
       setShowElement(false);
-    }, 5000);
+    }, 5500);
   }, []);
 
   return (
-    <div>
-      {showElement ? (
+    <div id="fadeOut">
+      {showElement && (
         <div className="justify-center flex max-h-screen min-w-full bg-white absolute py-5">
           <svg
             className="justify-center flex"
@@ -51,12 +50,10 @@ const Loader = () => {
             />
           </svg>
         </div>
-      ) : (
-        <></>
       )}
     </div>
   );
-};
+}
 
 const TypeWriter = () => {
   const [text] = useTypewriter({
@@ -103,9 +100,6 @@ export default function Home() {
             className="h-20 w-20 justify-center flex"
           />
           <ul className="flex items-center gap-2">
-            {/* <li>
-              <BsFillMoonStarsFill className="cursor-pointer text-xl" />
-            </li> */}
             <li
               className="text-5xl flex justify-center gap-16 py-2
          text-gray-800"
