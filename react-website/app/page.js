@@ -68,7 +68,7 @@ const TypeWriter = () => {
     ],
     typeSpeed: 100,
     deleteSpeed: 75,
-    delaySpeed: 6000,
+    delaySpeed: 5000,
     loop: 0,
   });
 
@@ -76,7 +76,7 @@ const TypeWriter = () => {
   useEffect(() => {
     setTimeout(function () {
       setShowElement(true);
-    }, 2000);
+    }, 5000);
   }, []);
 
   return (
