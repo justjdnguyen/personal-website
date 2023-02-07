@@ -4,26 +4,26 @@
 
 #fadeOut{
   animation-name: fadeout;
-  animation-duration: 2s;
-  animation-delay: 4s ;
+  animation-duration: 2.5s;
+  animation-delay: 3s ;
 }
 
 #j_path {
     stroke-dasharray: 1070;
     stroke-dashoffset: 0;
-    animation: jdash 3s linear;
+    animation: jdash 2.5s linear;
   }
 
   #diag_path {
     stroke-dasharray: 932;
     stroke-dashoffset: 0;
-    animation: diagdash 3s linear;
+    animation: diagdash 2.5s linear;
   }
 
   #down_path {
     stroke-dasharray: 734;
     stroke-dashoffset: 0;
-    animation: downdash 3s linear;
+    animation: downdash 2.5s linear;
   }
 
   @keyframes fadeout {

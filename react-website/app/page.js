@@ -14,7 +14,7 @@ function Loader() {
   useEffect(() => {
     setTimeout(function () {
       setShowElement(false);
-    }, 5500);
+    }, 5000);
   }, []);
 
   return (
@@ -64,7 +64,7 @@ function TypeWriter(props) {
     ],
     typeSpeed: 100,
     deleteSpeed: 75,
-    delaySpeed: 5000,
+    delaySpeed: 4750,
     loop: 0,
   });
 
