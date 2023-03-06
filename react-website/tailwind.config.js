@@ -11,10 +11,8 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {
-      // fontFamily: {
-      //   burtons: "burtons",
-      // },
+    fontFamily: {
+      display: "Noto Sans",
     },
   },
   plugins: [],

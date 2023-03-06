@@ -6,8 +6,10 @@ import {
 } from "react-icons/ai";
 import { BsFillMoonStarsFill } from "react-icons/bs";
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useTypewriter, Cursor } from "react-simple-typewriter";
+import { AnimatePresence, motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
 
 function Loader() {
   const [showElement, setShowElement] = React.useState(true);
@@ -88,21 +90,251 @@ function TypeWriter(props) {
   }
 
   return (
-    <div className="App text-2xl py-2">
+    <div className="text-2xl py-2">
       <span className="dark:text-white">{text}</span>
       <Cursor cursorStyle="_" cursorColor={color()} cursorBlinking="true" />
     </div>
   );
 }
 
+function Contact() {
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_yttegid",
+        "template_bo96owo",
+        form.current,
+        "pRxodouFiz39ztjQy"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
+
+  return (
+    <div className="h-full w-full">
+      <h1 className="text-xl grid pb-4">Contact Me</h1>
+      <form
+        ref={form}
+        onSubmit={sendEmail}
+        className="h-5/6 w-full grid grid-rows-6 grid-columns-4 grid-flow-row gap-4"
+      >
+        <input
+          placeholder="Name"
+          type="text"
+          name="user_name"
+          className="border-2 border-gray-600 rounded row-start-1 row-span-1 col-start-1 col-span-2 dark:bg-gray-900 dark:border-white indent-4"
+        />
+        <input
+          placeholder="Email"
+          type="email"
+          name="user_email"
+          className="border-2 border-gray-600 rounded row-start-1 row-span-1 col-start-3 col-span-2 dark:bg-gray-900 dark:border-white indent-4"
+        />
+        <textarea
+          placeholder="Message"
+          name="message"
+          className="border-2 border-gray-600 rounded row-start-2 row-span-4 col-start-1 col-span-4 dark:bg-gray-900 dark:border-white indent-4 pt-4"
+        />
+        <input
+          type="submit"
+          value="Send"
+          className="row-start-6 col-start-4 bg-gradient-to-r from-violet-300 to-blue-400 text-xl text-white rounded"
+        />
+      </form>
+    </div>
+  );
+}
+
+function Slider() {
+  const [showAbout, setShowAbout] = React.useState(true);
+  const [showProjects, setShowProjects] = React.useState(false);
+  const [showContact, setShowContact] = React.useState(false);
+
+  return (
+    <div className="w-full h-5/6 col-span-4 row-span-6 row-start-1 col-start-3 bg-gradient-to-r from-blue-400 to-violet-300 rounded-2xl p-2">
+      <div className="flex-col h-full w-full items-center justify-center bg-white dark:bg-gray-900 rounded-xl dark:text-white">
+        <nav className="py-4 mb-5 px-8 flex-row max-h-10">
+          <ul className="flex flex-row-reverse gap-10 text-lg">
+            <li>
+              <a
+                id="fromLeft"
+                onClick={() => {
+                  setShowAbout(false);
+
+                  setShowProjects(false);
+                  setTimeout(() => setShowContact(true), 400);
+                }}
+              >
+                Contact
+              </a>
+            </li>
+            <li>
+              <a
+                id="fromLeft"
+                onClick={() => {
+                  setShowAbout(false);
+                  setShowContact(false);
+                  setTimeout(() => setShowProjects(true), 400);
+                }}
+              >
+                Projects
+              </a>
+            </li>
+            <li>
+              <a
+                id="fromLeft"
+                onClick={() => {
+                  setShowContact(false);
+                  setShowProjects(false);
+                  setTimeout(() => setShowAbout(true), 400);
+                }}
+              >
+                About
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div className="flex w-full h-full px-8 py-3">
+          <AnimatePresence>
+            {showAbout && (
+              <motion.div
+                key="box"
+                initial={{ opacity: 1 }}
+                exit={{
+                  x: "50%",
+                  width: "50%",
+                  opacity: 0,
+                  scale: 0.5,
+                }}
+                transition={{ duration: 0.1, delay: 0.2 }}
+                className="overflow-hidden"
+              >
+                <h1 className="text-5xl pb-6">Hey there!</h1>
+                <p className="text-3xl pb-4">
+                  My name is Jimmy Nguyen and I am a third year student at The
+                  University of Texas at Dallas. I am currently studying
+                  Computer Science and am on track to graduate Spring 2024.
+                  Currently looking for a Summer Internship 2023.
+                </p>
+                <p className="text-3xl pb-4">
+                  I discovered coding back in 2017 in my sophomore coding class
+                  and instantly fell in love. If you want to check out what I've
+                  coded so far check out my Projects tab!
+                </p>
+                <p className="text-3xl">
+                  I recently came back from a semester abroad in South Korea.
+                  The picture on the left was actually taken there! I definitely
+                  enjoyed my time there and already have decided to go again.
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <AnimatePresence>
+            {showProjects && (
+              <motion.div
+                key="box"
+                initial={{ opacity: 1 }}
+                exit={{
+                  x: "50%",
+                  width: "50%",
+                  opacity: 0,
+                  scale: 0.5,
+                }}
+                transition={{ duration: 0.1, delay: 0.2 }}
+                className="overflow-hidden w-full h-full"
+              >
+                <div className="grid grid-rows-1 grid-cols-3 w-full h-full pt-10 gap-4  text-center">
+                  <div className="row-start-1 row-span-1 col-start-1 col-span-1 w-full h-full">
+                    <div className="grid grid-rows-3 grid-flow-row h-2/3 border-4 rounded-2xl border-gray-600 dark:border-white">
+                      <h1 className="text-4xl my-auto">editify</h1>
+                      <img
+                        src="/editify.png"
+                        className="w-1/3 h-full mx-auto"
+                      ></img>
+                      <h2 className="my-auto px-2">
+                        editify is an all in one playlist builder and editor
+                        leveraging off the Spotify API
+                      </h2>
+                    </div>
+                  </div>
+                  <div className="row-start-1 row-span-1 col-start-2 col-span-1 w-full h-full">
+                    <div className="grid grid-rows-3 grid-flow-row h-2/3 border-4 rounded-2xl border-gray-600 dark:border-white">
+                      <h1 className="text-4xl my-auto">myFan</h1>
+                      <img
+                        src="/fan.png"
+                        className="w-1/3 h-full mx-auto"
+                      ></img>
+                      <h2 className="my-auto px-2">
+                        Using a Raspberry Pi and a Flask web server, I turned a
+                        simple fan into a smart fan
+                      </h2>
+                    </div>
+                  </div>
+                  <div className="row-start-1 row-span-1 col-start-3 col-span-1 w-full h-full">
+                    <div className="grid grid-rows-3 grid-flow-row h-2/3 border-4 rounded-2xl border-gray-600 dark:border-white">
+                      <h1 className="text-4xl my-auto">Attendance Tracker</h1>
+                      <img
+                        src="/band.png"
+                        className="w-1/3 h-full mx-auto"
+                      ></img>
+                      <h2 className="my-auto px-2">
+                        Built a service to keep track of attendance of a local
+                        high school marching band
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <AnimatePresence>
+            {showContact && (
+              <motion.div
+                key="box"
+                initial={{ opacity: 1 }}
+                exit={{
+                  x: "50%",
+                  width: "50%",
+                  opacity: 0,
+                  scale: 0.5,
+                }}
+                transition={{ duration: 0.1, delay: 0.2 }}
+                className="overflow-hidden w-full"
+              >
+                <Contact />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [darkMode, setDarkMode] = React.useState(false);
+  const [showImage, setShowImage] = React.useState(false);
+  setTimeout(function () {
+    setShowImage(true);
+  }, 2800);
+
   return (
     <div className={darkMode ? "dark" : ""}>
       <main className=" bg-white dark:bg-gray-900">
         <Loader />
         <section className="min-h-screen px-10">
-          <nav className="py-10 mb-12 flex justify-between">
+          <nav className="py-10 mb-5 flex justify-between">
             <svg width="50" height="50" viewBox="0 0 500 500">
               <g id="group">
                 <path
@@ -162,12 +394,24 @@ export default function Home() {
               </li>
             </ul>
           </nav>
+          <div className="grid grid-rows-6 grid-cols-6 grid-flow-col">
+            <>
+              {showImage && (
+                <img
+                  src="/profile.JPG"
+                  alt="Profile Picture"
+                  className="max-w-sm rounded-full mx-10 shadow-2xl row-span-3 col-span-2 row-start-1 col-start-1"
+                />
+              )}
+            </>
 
-          <div className="text-left p-10">
-            <h1 className="text-5xl font-medium dark:text-white">
-              Jimmy Nguyen
-            </h1>
-            <TypeWriter mode={darkMode} />
+            <div className="text-left p-10 ml-8 row-span-3 col-span-2 row-start-4 col-start-1">
+              <h1 className="text-5xl font-medium dark:text-white">
+                Jimmy Nguyen
+              </h1>
+              <TypeWriter mode={darkMode} />
+            </div>
+            <Slider />
           </div>
         </section>
       </main>
