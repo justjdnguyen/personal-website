@@ -393,7 +393,7 @@ export default function Home() {
               <li className="bg-gradient-to-r from-violet-300 to-blue-400 text-xl text-white px-3 py-2 rounded flex justify-center gap-2">
                 <AiOutlineDownload className="mt-1" />
                 <a
-                  href="https://drive.google.com/uc?export=download&id=1QfWhzhjOWgzZ0lSiBiIbk4NxFi7I1OLu"
+                  href="https://drive.google.com/uc?export=download&id=1jUhwLrlYeLKTsoYD7rKyW99PgpkYymlj"
                   target={"_blank"}
                 >
                   Resume
