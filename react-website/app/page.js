@@ -61,8 +61,8 @@ function TypeWriter(props) {
     words: [
       "",
       "Software Engineer",
-      "CS Student at The University of Texas at Dallas",
-      "Looking for an Entry Level position",
+      "CS Grad from The University of Texas at Dallas",
+      "Always willing to learn",
     ],
     typeSpeed: 100,
     deleteSpeed: 75,
@@ -224,10 +224,10 @@ function Slider() {
               >
                 <h1 className="text-2xl pb-6 lg:text-5xl">Hey there!</h1>
                 <p className="text-xl pb-4 lg:text-3xl">
-                  My name is Jimmy Nguyen and I am a third year student at The
-                  University of Texas at Dallas. I am currently studying
-                  Computer Science and am on track to graduate Spring 2024.
-                  Currently looking for an entry level position.
+                  My name is Jimmy Nguyen and I graduated from The University of
+                  Texas at Dallas with a Bachelors of Science in Computer
+                  Science. I am currently working at Tokio Marine HCC as a
+                  Technology Program Analyst.
                 </p>
                 <p className="text-xl pb-4 lg:text-3xl">
                   I discovered coding back in 2017 in my sophomore coding class
@@ -235,10 +235,9 @@ function Slider() {
                   coded so far check out my Projects tab!
                 </p>
                 <p className="text-xl lg:text-3xl">
-                  I recently finished up a summer internship at Tokio Marine HCC.
-                  I worked on a team that mainly focused on certifying and looking up
-                  insurance certificates. I was able to learn new languages such as C#
-                  and work on databases using SQL Server. Check my LinkedIn for more info!
+                  I have tons of experience with full stack web apps and am
+                  always ready to launch into something new. Check out my
+                  LinkedIn if you want to connect!
                 </p>
               </motion.div>
             )}
