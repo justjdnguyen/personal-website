@@ -226,8 +226,8 @@ function Slider() {
                 <p className="text-xl pb-4 lg:text-3xl">
                   My name is Jimmy Nguyen and I graduated from The University of
                   Texas at Dallas with a Bachelors of Science in Computer
-                  Science. I am currently working at Tokio Marine HCC as a
-                  Technology Program Analyst.
+                  Science. I am currently working at Tokio Marine HCC in a Rotational Program
+                  as a IT Analyst.
                 </p>
                 <p className="text-xl pb-4 lg:text-3xl">
                   I discovered coding back in 2017 in my sophomore coding class
@@ -392,7 +392,7 @@ export default function Home() {
               <li className="bg-gradient-to-r from-violet-300 to-blue-400 text-xl text-white px-3 py-2 rounded flex justify-center gap-2">
                 <AiOutlineDownload className="mt-1" />
                 <a
-                  href="https://drive.google.com/uc?export=download&id=1jUhwLrlYeLKTsoYD7rKyW99PgpkYymlj"
+                  href="https://drive.google.com/uc?export=download&id=1hrc7AYl6XgqVbKH96-T1e58nWb-6jo46"
                   target={"_blank"}
                 >
                   Resume
