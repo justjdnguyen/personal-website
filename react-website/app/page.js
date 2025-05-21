@@ -273,22 +273,18 @@ function Navbar({
 // Profile Picture Component
 function ProfilePicture() {
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
-      className="relative w-48 h-48 md:w-80 md:h-80 mb-8 mx-auto mt-8 md:mt-0"
-    >
-      <div className="absolute inset-0 rounded-full overflow-hidden p-1">
-        <img
-          src="/profile.JPG"
+    <div className="relative w-48 h-48 md:w-80 md:h-80 mb-8 mx-auto">
+      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-sky-400 via-blue-500 to-indigo-500 p-1">
+        <Image
+          src="/profile.jpg"
           alt="Jimmy Nguyen"
-          className="w-full h-full object-cover rounded-full"
+          width={320}
+          height={320}
+          className="rounded-full w-full h-full object-cover"
+          priority
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-sky-500/20 to-blue-600/20" />
       </div>
-      <div className="absolute inset-0 rounded-full border-8 border-sky-500/20 dark:border-gray-700" />
-    </motion.div>
+    </div>
   );
 }
 
@@ -510,35 +506,23 @@ function AboutMeSection() {
   return (
     <section id="about" className="py-20 bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
-          className="max-w-4xl mx-auto"
-        >
-          <h2 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-blue-600 dark:from-gray-200 dark:to-gray-400 leading-[1.3] pb-2">
-            Hey there!
-          </h2>
-          <div className="space-y-6 text-gray-600 dark:text-gray-300">
-            <p className="text-lg md:text-xl">
-              My name is Jimmy Nguyen and I graduated from The University of
-              Texas at Dallas with a Bachelors of Science in Computer Science. I
-              am currently working at Tokio Marine HCC in a Rotational Program
-              as a IT Analyst.
-            </p>
-            <p className="text-lg md:text-xl">
-              I discovered coding back in 2017 in my sophomore coding class and
-              instantly fell in love. If you want to check out what I've coded
-              so far check out my Projects tab!
-            </p>
-            <p className="text-lg md:text-xl">
-              I have tons of experience with full stack web apps and am always
-              ready to launch into something new. Check out my LinkedIn if you
-              want to connect!
-            </p>
-          </div>
-        </motion.div>
+        <h2 className="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-white">
+          About Me
+        </h2>
+        <div className="max-w-3xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+            Hey there! I&apos;m a passionate software engineer with a strong
+            foundation in both front-end and back-end development. I love
+            creating elegant solutions to complex problems and am always eager
+            to learn new technologies.
+          </p>
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+            When I&apos;m not coding, you can find me exploring new
+            technologies, contributing to open-source projects, or enjoying
+            outdoor activities. I believe in continuous learning and staying
+            up-to-date with the latest industry trends.
+          </p>
+        </div>
       </div>
     </section>
   );
