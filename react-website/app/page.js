@@ -277,7 +277,7 @@ function ProfilePicture() {
     <div className="relative w-48 h-48 md:w-80 md:h-80 mb-8 mx-auto">
       <div className="absolute inset-0 rounded-full bg-gradient-to-br from-sky-400 via-blue-500 to-indigo-500 p-1">
         <Image
-          src="/profile.JPG"
+          src="/profile.jpg"
           alt="Jimmy Nguyen"
           width={320}
           height={320}
