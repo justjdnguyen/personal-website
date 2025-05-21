@@ -282,6 +282,7 @@ function ProfilePicture() {
           height={320}
           className="rounded-full w-full h-full object-cover"
           priority
+          unoptimized
         />
       </div>
     </div>
