@@ -485,7 +485,7 @@ function ContactSection() {
             Get In Touch
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mb-8">
-            Have a project in mind? Let's discuss how we can work together.
+            Have a project in mind? Let&apos;s discuss how we can work together.
           </p>
           <motion.a
             href="mailto:jimmynguyen2468@gmail.com"
