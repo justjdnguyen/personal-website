@@ -3,424 +3,741 @@ import {
   AiFillLinkedin,
   AiFillGithub,
   AiOutlineDownload,
+  AiOutlineCode,
+  AiOutlineBulb,
+  AiOutlineRocket,
 } from "react-icons/ai";
 import { BsFillMoonStarsFill } from "react-icons/bs";
 import React from "react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTypewriter, Cursor } from "react-simple-typewriter";
-import { AnimatePresence, motion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import emailjs from "@emailjs/browser";
+import {
+  FaJava,
+  FaPython,
+  FaJs,
+  FaHtml5,
+  FaCss3Alt,
+  FaPhp,
+  FaReact,
+  FaNodeJs,
+  FaDocker,
+  FaGitAlt,
+  FaAws,
+  FaDatabase,
+  FaMicrosoft,
+} from "react-icons/fa";
+import {
+  SiCplusplus,
+  SiCsharp,
+  SiPostgresql,
+  SiMysql,
+  SiFlask,
+  SiExpress,
+  SiBootstrap,
+  SiTailwindcss,
+  SiFirebase,
+  SiGooglecloud,
+  SiVercel,
+  SiXampp,
+  SiNextdotjs,
+} from "react-icons/si";
+import Image from "next/image";
 
-function Loader() {
-  const [showElement, setShowElement] = React.useState(true);
-  useEffect(() => {
-    setTimeout(function () {
-      setShowElement(false);
-    }, 5000);
-  }, []);
-
+// Footer Component
+function Footer() {
   return (
-    <div id="fadeOut">
-      {showElement && (
-        <div className="justify-center flex h-screen min-w-full bg-white dark:bg-gray-900 absolute py-5">
-          <svg
-            className="justify-center flex"
-            viewBox="-225 -225 1000 1000"
-            version="1.1"
-          >
-            <path
-              id="j_path"
-              d="M184.976 212.481C184.576 362.881 185.243 351.681 174.709 373.548C166.443 390.614 154.043 401.681 136.176 407.814C128.709 410.348 124.709 410.881 110.043 410.881C94.5759 410.881 91.3759 410.348 80.8426 407.014C66.9759 402.481 52.0426 393.014 44.3092 384.081L39.1092 377.948L27.6426 390.348C21.2426 397.148 16.0426 403.148 16.0426 403.681C16.0426 405.814 29.1092 418.748 36.7092 424.348C59.5092 440.614 85.6426 447.014 119.376 444.614C170.309 441.014 203.376 413.548 217.243 363.548L220.709 350.881L221.109 214.481L221.509 78.2142H203.509H185.509L184.976 212.481Z"
-              fill="white"
-              stroke="#000000"
-              strokeWidth="4"
-            />
-            <path
-              id="diag_path"
-              d="M232.043 83.1475C233.776 85.9475 240.576 98.0809 247.376 110.214C254.043 122.348 261.243 135.148 263.376 138.881C266.576 144.748 286.976 176.214 324.709 233.814C346.843 267.681 361.643 290.214 376.709 313.548C385.376 326.748 396.176 343.281 400.709 350.214C405.376 357.148 419.376 378.748 432.043 398.214C444.576 417.681 456.309 435.548 457.776 437.814L460.709 442.214H477.776C487.109 442.214 494.709 441.814 494.709 441.281C494.709 440.881 487.109 427.548 477.909 411.681C463.109 386.348 448.576 363.148 411.643 306.214C392.576 276.881 381.776 260.081 366.576 236.481C358.176 223.548 348.709 208.614 345.376 203.548C331.109 181.548 285.109 110.214 275.376 94.8809L264.709 78.3475L246.976 78.2142H229.109L232.043 83.1475Z"
-              fill="white"
-              stroke="#000000"
-              strokeWidth="4"
-            />
-            <path
-              id="down_path"
-              d="M461.376 221.014C461.376 356.881 461.509 363.948 463.776 367.281C465.109 369.281 472.709 382.214 480.709 396.214C488.576 410.081 495.643 422.081 496.309 422.748C496.843 423.548 497.376 346.214 497.376 251.148V78.2142H479.376H461.376V221.014Z"
-              fill="white"
-              stroke="#000000"
-              strokeWidth="4"
-            />
-          </svg>
+    <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="mb-4 md:mb-0">
+            <p className="text-gray-600 dark:text-gray-400">
+              © {new Date().getFullYear()} Jimmy Nguyen. All rights reserved.
+            </p>
+          </div>
+          <div className="flex space-x-6">
+            <a
+              href="https://github.com/justjdnguyen"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+            >
+              <AiFillGithub className="text-2xl" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/jimmypdnguyen/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+            >
+              <AiFillLinkedin className="text-2xl" />
+            </a>
+          </div>
         </div>
-      )}
-    </div>
+      </div>
+    </footer>
   );
 }
 
-function TypeWriter(props) {
-  const [text] = useTypewriter({
-    words: [
-      "",
-      "Software Engineer",
-      "CS Grad from The University of Texas at Dallas",
-      "Always willing to learn",
-    ],
-    typeSpeed: 100,
-    deleteSpeed: 75,
-    delaySpeed: 4750,
-    loop: 0,
-  });
+// Navbar Component
+function Navbar({
+  darkMode,
+  setDarkMode,
+  isMenuOpen,
+  setIsMenuOpen,
+  activeSection,
+  setActiveSection,
+}) {
+  const navItems = [
+    { id: "home", label: "Home" },
+    { id: "about", label: "About" },
+    { id: "experience", label: "Experience" },
+    { id: "skills", label: "Skills" },
+    { id: "contact", label: "Contact" },
+  ];
 
-  const [showElement, setShowElement] = React.useState(false);
+  const menuRef = useRef(null);
+  const menuButtonRef = useRef(null);
+
   useEffect(() => {
-    setTimeout(function () {
-      setShowElement(true);
-    }, 5000);
-  }, []);
-
-  function color() {
-    if (props.mode && showElement) {
-      return "white";
-    } else if (!props.mode && showElement) {
-      return "black";
-    } else if (props.mode && !showElement) {
-      return "black";
-    } else {
-      return "white";
+    function handleClickOutside(event) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target) &&
+        !menuButtonRef.current.contains(event.target)
+      ) {
+        setIsMenuOpen(false);
+      }
     }
-  }
 
-  return (
-    <div className="text-xl py-2 lg:text-2xl">
-      <span className="dark:text-white">{text}</span>
-      <Cursor cursorStyle="_" cursorColor={color()} cursorBlinking="true" />
-    </div>
-  );
-}
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
 
-function Contact() {
-  const form = useRef();
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen, setIsMenuOpen]);
 
-  const sendEmail = (e) => {
-    e.preventDefault();
-
-    emailjs
-      .sendForm(
-        "service_yttegid",
-        "template_bo96owo",
-        form.current,
-        "pRxodouFiz39ztjQy"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      setActiveSection(sectionId);
+    }
   };
 
   return (
-    <div className="h-full w-full">
-      <h1 className="text-xl grid pb-4">Contact Me</h1>
-      <form
-        ref={form}
-        onSubmit={sendEmail}
-        className="h-5/6 w-full grid grid-rows-6 grid-cols-2 grid-flow-row gap-1 lg:grid-cols-4 lg:gap-4"
-      >
-        <input
-          placeholder="Name"
-          type="text"
-          name="user_name"
-          className="w-full border-2 border-gray-600 rounded row-start-1 row-span-1 col-start-1 col-span-1 lg:col-span-2 dark:bg-gray-900 dark:border-white indent-4"
-        />
-        <input
-          placeholder="Email"
-          type="email"
-          name="user_email"
-          className="w-full border-2 border-gray-600 rounded row-start-1 row-span-1 col-start-2 col-span-1 lg:col-start-3 lg:col-span-2 dark:bg-gray-900 dark:border-white indent-4"
-        />
-        <textarea
-          placeholder="Message"
-          name="message"
-          className="w-full border-2 border-gray-600 rounded row-start-2 row-span-4 col-start-1 col-span-2 lg:col-span-4 dark:bg-gray-900 dark:border-white indent-4 pt-4"
-        />
-        <input
-          type="submit"
-          value="Send"
-          className="row-start-6 col-span-2 col-start-1 lg:col-span-1 lg:col-start-4 bg-gradient-to-r from-violet-300 to-blue-400 text-xl text-white rounded"
-        />
-      </form>
-    </div>
-  );
-}
-
-function Slider() {
-  const [showAbout, setShowAbout] = React.useState(true);
-  const [showProjects, setShowProjects] = React.useState(false);
-  const [showContact, setShowContact] = React.useState(false);
-
-  return (
-    <div className="w-full h-5/6 col-span-3 row-span-3 row-start-2 col-start-1 lg:row-span-6 lg:row-start-1 lg:col-start-3 lg:col-span-4 bg-gradient-to-r from-blue-400 to-violet-300 rounded-2xl p-2 mt-36 lg:mt-0">
-      <div className="flex-col h-full w-full lg:items-center lg:justify-center bg-white dark:bg-gray-900 rounded-xl dark:text-white">
-        <nav className="py-4 mb-5 flex-row max-h-10 lg:px-8">
-          <ul className="flex flex-row-reverse text-lg px-8 justify-between lg:justify-start lg:gap-10 lg:px-0">
-            <li>
-              <a
-                className={showContact && "border-b-2 border-blue-400"}
-                id={!showContact && "fromLeft"}
-                onClick={() => {
-                  setShowAbout(false);
-                  setShowProjects(false);
-                  setTimeout(() => setShowContact(true), 400);
-                }}
-              >
-                Contact
-              </a>
-            </li>
-            <li>
-              <a
-                className={showProjects && "border-b-2 border-blue-400"}
-                id={!showProjects && "fromLeft"}
-                onClick={() => {
-                  setShowAbout(false);
-                  setShowContact(false);
-                  setTimeout(() => setShowProjects(true), 400);
-                }}
-              >
-                Projects
-              </a>
-            </li>
-            <li>
-              <a
-                className={showAbout && "border-b-2 border-blue-400"}
-                id={!showAbout && "fromLeft"}
-                onClick={() => {
-                  setShowContact(false);
-                  setShowProjects(false);
-                  setTimeout(() => setShowAbout(true), 400);
-                }}
-              >
-                About
-              </a>
-            </li>
-          </ul>
-        </nav>
-
-        <div className="flex w-full h-5/6 lg:h-full px-8 lg:py-3 justify-center">
-          <AnimatePresence>
-            {showAbout && (
-              <motion.div
-                key="box"
-                initial={{ opacity: 1 }}
-                exit={{
-                  x: "5%",
-                  width: "85%",
-                  opacity: 0,
-                  scale: 0.5,
-                }}
-                transition={{ duration: 0.1, delay: 0.2 }}
-                className="lg:overflow-hidden"
-              >
-                <h1 className="text-2xl pb-6 lg:text-5xl">Hey there!</h1>
-                <p className="text-xl pb-4 lg:text-3xl">
-                  My name is Jimmy Nguyen and I graduated from The University of
-                  Texas at Dallas with a Bachelors of Science in Computer
-                  Science. I am currently working at Tokio Marine HCC in a Rotational Program
-                  as a IT Analyst.
-                </p>
-                <p className="text-xl pb-4 lg:text-3xl">
-                  I discovered coding back in 2017 in my sophomore coding class
-                  and instantly fell in love. If you want to check out what I've
-                  coded so far check out my Projects tab!
-                </p>
-                <p className="text-xl lg:text-3xl">
-                  I have tons of experience with full stack web apps and am
-                  always ready to launch into something new. Check out my
-                  LinkedIn if you want to connect!
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-          <AnimatePresence>
-            {showProjects && (
-              <motion.div
-                key="box"
-                initial={{ opacity: 1 }}
-                exit={{
-                  x: "5%",
-                  width: "85%",
-                  opacity: 0,
-                  scale: 0.5,
-                }}
-                transition={{ duration: 0.1, delay: 0.2 }}
-                className="h-full lg:w-full lg:overflow-hidden"
-              >
-                <div className="grid grid-cols-1 grid-rows-3 w-full h-full text-center gap-2 lg:grid-rows-1 lg:grid-cols-3 lg:pt-10 lg:gap-4">
-                  <div className="row-start-1 row-span-1 col-start-1 col-span-1 w-full h-full">
-                    <div className="grid grid-rows-3 grid-flow-row h-full border-2 lg:h-2/3 lg:border-4 rounded-2xl border-gray-600 dark:border-white">
-                      <h1 className="text-2xl my-auto lg:text-4xl">editify</h1>
-                      <img
-                        src="/editify.png"
-                        className="w-1/4 h-3/4 mx-auto lg:w-1/3 lg:h-full"
-                      ></img>
-                      <h2 className="text-xs mx-2 my-auto lg:text-base">
-                        all in one playlist builder and editor
-                      </h2>
-                    </div>
-                  </div>
-                  <div className="row-start-2 row-span-1 col-start-1 col-span-1 w-full h-full lg:row-start-1 lg:row-span-1 lg:col-start-2">
-                    <div className="grid grid-rows-3 grid-flow-row h-full border-2 lg:h-2/3 lg:border-4 rounded-2xl border-gray-600 dark:border-white">
-                      <h1 className="text-2xl my-auto lg:text-4xl">myFan</h1>
-                      <img
-                        src="/fan.png"
-                        className="w-1/4 h-3/4 mx-auto lg:w-1/3 lg:h-full"
-                      ></img>
-                      <h2 className="text-xs my-auto px-2 lg:text-base">
-                        turned a standing fan into a smart one
-                      </h2>
-                    </div>
-                  </div>
-                  <div className="row-start-3 row-span-1 col-start-1 col-span-1 w-full h-full lg:row-start-1 lg:row-span-1 lg:col-start-3">
-                    <div className="grid grid-rows-3 grid-flow-row h-full border-2 lg:h-2/3 lg:border-4 rounded-2xl border-gray-600 dark:border-white">
-                      <h1 className="text-2xl my-auto lg:text-4xl">
-                        Attendance Tracker
-                      </h1>
-                      <img
-                        src="/band.png"
-                        className="w-1/4 h-3/4 mx-auto lg:w-1/3 lg:h-full"
-                      ></img>
-                      <h2 className="text-xs my-auto px-2 lg:text-base">
-                        track attendance of a marching band
-                      </h2>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-          <AnimatePresence>
-            {showContact && (
-              <motion.div
-                key="box"
-                initial={{ opacity: 1 }}
-                exit={{
-                  x: "5%",
-                  width: "85%",
-                  opacity: 0,
-                  scale: 0.5,
-                }}
-                transition={{ duration: 0.1, delay: 0.2 }}
-                className="lg:overflow-hidden w-full"
-              >
-                <Contact />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function Home() {
-  const [darkMode, setDarkMode] = React.useState(false);
-  const [showImage, setShowImage] = React.useState(false);
-  setTimeout(function () {
-    setShowImage(true);
-  }, 2700);
-
-  return (
-    <div className={darkMode ? "dark" : ""}>
-      <main className=" bg-white dark:bg-gray-900">
-        <Loader />
-        <section className="min-h-screen px-5 lg:px-10">
-          <nav className="py-10 mb-5 flex justify-between">
-            <svg
-              className="ml-5 lg:ml-0"
-              width="50"
-              height="50"
-              viewBox="0 0 500 500"
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center">
+            <button
+              onClick={() => scrollToSection("home")}
+              className="w-10 h-10 md:w-12 md:h-12"
             >
-              <g id="group">
+              <svg
+                width="100%"
+                height="100%"
+                viewBox="0 0 534 534"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="drop-shadow-sm"
+              >
                 <path
                   id="j"
                   d="M184.976 212.481C184.576 362.881 185.243 351.681 174.709 373.548C166.443 390.614 154.043 401.681 136.176 407.814C128.709 410.348 124.709 410.881 110.043 410.881C94.5759 410.881 91.3759 410.348 80.8426 407.014C66.9759 402.481 52.0426 393.014 44.3092 384.081L39.1092 377.948L27.6426 390.348C21.2426 397.148 16.0426 403.148 16.0426 403.681C16.0426 405.814 29.1092 418.748 36.7092 424.348C59.5092 440.614 85.6426 447.014 119.376 444.614C170.309 441.014 203.376 413.548 217.243 363.548L220.709 350.881L221.109 214.481L221.509 78.2142H203.509H185.509L184.976 212.481Z"
-                  className="fill-black dark:fill-white"
+                  className="text-blue-500 dark:text-blue-400"
+                  fill="currentColor"
                 />
                 <path
                   id="diag"
                   d="M232.043 83.1475C233.776 85.9475 240.576 98.0809 247.376 110.214C254.043 122.348 261.243 135.148 263.376 138.881C266.576 144.748 286.976 176.214 324.709 233.814C346.843 267.681 361.643 290.214 376.709 313.548C385.376 326.748 396.176 343.281 400.709 350.214C405.376 357.148 419.376 378.748 432.043 398.214C444.576 417.681 456.309 435.548 457.776 437.814L460.709 442.214H477.776C487.109 442.214 494.709 441.814 494.709 441.281C494.709 440.881 487.109 427.548 477.909 411.681C463.109 386.348 448.576 363.148 411.643 306.214C392.576 276.881 381.776 260.081 366.576 236.481C358.176 223.548 348.709 208.614 345.376 203.548C331.109 181.548 285.109 110.214 275.376 94.8809L264.709 78.3475L246.976 78.2142H229.109L232.043 83.1475Z"
-                  className="fill-black dark:fill-white"
+                  className="text-purple-500 dark:text-purple-400"
+                  fill="currentColor"
                 />
                 <path
                   id="down"
                   d="M461.376 221.014C461.376 356.881 461.509 363.948 463.776 367.281C465.109 369.281 472.709 382.214 480.709 396.214C488.576 410.081 495.643 422.081 496.309 422.748C496.843 423.548 497.376 346.214 497.376 251.148V78.2142H479.376H461.376V221.014Z"
-                  className="fill-black dark:fill-white"
+                  className="text-pink-500 dark:text-pink-400"
+                  fill="currentColor"
                 />
-              </g>
-            </svg>
-            <ul className="flex items-center gap-2">
-              <li
-                className="text-3xl flex justify-center gap-16 py-2 px-1
-         text-black dark:text-yellow-500"
-              >
-                <BsFillMoonStarsFill
-                  onClick={() => setDarkMode(!darkMode)}
-                  className="cursor-pointer"
-                />
-              </li>
-              <li
-                className="text-4xl flex justify-center gap-16 py-2
-         text-gray-800 dark:text-white"
-              >
-                <a href="https://github.com/justjdnguyen" target={"_blank"}>
-                  <AiFillGithub />
-                </a>
-              </li>
-              <li
-                className="text-4xl flex justify-center gap-16 py-2
-         text-blue-500"
-              >
-                <a
-                  href="https://www.linkedin.com/in/jimmypdnguyen/"
-                  target={"_blank"}
-                >
-                  <AiFillLinkedin />
-                </a>
-              </li>
-              <li className="bg-gradient-to-r from-violet-300 to-blue-400 text-xl text-white px-3 py-2 rounded flex justify-center gap-2">
-                <AiOutlineDownload className="mt-1" />
-                <a
-                  href="https://drive.google.com/uc?export=download&id=1hrc7AYl6XgqVbKH96-T1e58nWb-6jo46"
-                  target={"_blank"}
-                >
-                  Resume
-                </a>
-              </li>
-            </ul>
-          </nav>
-          <div className="grid grid-rows-4 grid-cols-3 grid-flow-col lg:grid-rows-6 lg:grid-cols-6">
-            <>
-              {showImage && (
-                <img
-                  src="/profile.JPG"
-                  alt="Profile Picture"
-                  className="max-w-xs mx-auto rounded-full shadow-2xl row-span-1 col-span-3 row-start-1 col-start-1 lg:max-w-sm lg:mx-10 lg:row-span-3 lg:col-span-2 lg:row-start-1 lg:col-start-1"
-                />
-              )}
-            </>
-
-            <div className="text-center row-span-1 col-span-3 row-start-2 col-start-1 lg:text-left lg:p-10 lg-ml-8 lg:row-span-3 lg:col-span-2 lg:row-start-4 lg:col-start-1  lg:ml-8">
-              <h1 className="text-4xl lg:text-5xl font-medium dark:text-white">
-                Jimmy Nguyen
-              </h1>
-              <TypeWriter mode={darkMode} />
-            </div>
-            <Slider />
+              </svg>
+            </button>
           </div>
-        </section>
-      </main>
-    </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`text-sm font-medium transition-colors ${
+                  activeSection === item.id
+                    ? "text-blue-500 dark:text-blue-400"
+                    : "text-gray-600 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400"
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-yellow-500 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+            >
+              <BsFillMoonStarsFill className="text-lg" />
+            </button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className="p-2 mr-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-yellow-500 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+            >
+              <BsFillMoonStarsFill className="text-lg" />
+            </button>
+            <button
+              ref={menuButtonRef}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {isMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              ref={menuRef}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="md:hidden absolute top-16 right-4 bg-white dark:bg-gray-800 shadow-lg rounded-2xl"
+            >
+              <div className="py-2 px-6 space-y-2">
+                {navItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      scrollToSection(item.id);
+                      setIsMenuOpen(false);
+                    }}
+                    className={`block w-full text-right text-sm font-medium transition-colors whitespace-nowrap ${
+                      activeSection === item.id
+                        ? "text-blue-500 dark:text-blue-400"
+                        : "text-gray-600 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400"
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </nav>
   );
+}
+
+// Profile Picture Component
+function ProfilePicture() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+      className="relative w-48 h-48 md:w-80 md:h-80 mb-8 mx-auto mt-8 md:mt-0"
+    >
+      <div className="absolute inset-0 rounded-full overflow-hidden p-1">
+        <img
+          src="/profile.JPG"
+          alt="Jimmy Nguyen"
+          className="w-full h-full object-cover rounded-full"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-sky-500/20 to-blue-600/20" />
+      </div>
+      <div className="absolute inset-0 rounded-full border-8 border-sky-500/20 dark:border-gray-700" />
+    </motion.div>
+  );
+}
+
+// Modern Hero Section
+function HeroSection({ darkMode }) {
+  const { scrollYProgress } = useScroll();
+  const y = useTransform(scrollYProgress, [0, 1], [0, -300]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+  return (
+    <motion.div
+      id="home"
+      style={{ y, opacity }}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-gray-900"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-sky-400/20 via-blue-500/20 to-indigo-500/20 dark:from-gray-200/20 dark:via-gray-400/20 dark:to-gray-600/20" />
+      <div className="container mx-auto px-4 z-10 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-center"
+        >
+          <ProfilePicture />
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gray-900 dark:text-white">
+            Jimmy Nguyen
+          </h1>
+          <h2 className="text-2xl md:text-3xl mb-8 text-gray-700 dark:text-gray-300">
+            Software Engineer & Full Stack Developer
+          </h2>
+          <p className="text-lg md:text-xl mb-12 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Building innovative solutions with modern technologies. Passionate
+            about creating impactful software that makes a difference.
+          </p>
+          <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-6 px-4 md:px-0">
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              href="https://www.linkedin.com/in/jimmypdnguyen/"
+              target="_blank"
+              className="w-48 md:w-auto px-6 py-2.5 bg-blue-600 text-white rounded-full flex items-center justify-center gap-2 hover:shadow-lg transition-shadow mx-auto md:mx-0"
+            >
+              <AiFillLinkedin className="text-xl" />
+              LinkedIn
+            </motion.a>
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              href="https://github.com/justjdnguyen"
+              target="_blank"
+              className="w-48 md:w-auto px-6 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-full flex items-center justify-center gap-2 hover:shadow-lg transition-shadow mx-auto md:mx-0"
+            >
+              <AiFillGithub className="text-xl" />
+              GitHub
+            </motion.a>
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              href="/Jimmy_Nguyen_Resume.pdf"
+              download
+              className="w-48 md:w-auto px-6 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full flex items-center justify-center gap-2 hover:shadow-lg transition-shadow mx-auto md:mx-0"
+            >
+              <AiOutlineDownload className="text-xl" />
+              Resume
+            </motion.a>
+          </div>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+}
+
+// Modern Skills Section
+function SkillsSection() {
+  const skills = [
+    {
+      category: "Languages",
+      items: [
+        { name: "Java", icon: <FaJava className="text-[#007396]" /> },
+        { name: "Python", icon: <FaPython className="text-[#3776AB]" /> },
+        { name: "C++", icon: <SiCplusplus className="text-[#00599C]" /> },
+        { name: "C#", icon: <SiCsharp className="text-[#239120]" /> },
+        { name: "JavaScript", icon: <FaJs className="text-[#F7DF1E]" /> },
+        { name: "HTML", icon: <FaHtml5 className="text-[#E34F26]" /> },
+        { name: "CSS", icon: <FaCss3Alt className="text-[#1572B6]" /> },
+        { name: "PHP", icon: <FaPhp className="text-[#777BB4]" /> },
+        { name: "SQL Server", icon: <FaDatabase className="text-[#CC2927]" /> },
+        {
+          name: "PostgreSQL",
+          icon: <SiPostgresql className="text-[#336791]" />,
+        },
+        { name: "MySQL", icon: <SiMysql className="text-[#4479A1]" /> },
+      ],
+    },
+    {
+      category: "Frameworks",
+      items: [
+        { name: "React.js", icon: <FaReact className="text-[#61DAFB]" /> },
+        { name: "Next.js", icon: <SiNextdotjs className="text-[#000]" /> },
+        { name: "Node.js", icon: <FaNodeJs className="text-[#339933]" /> },
+        { name: "Flask", icon: <SiFlask className="text-[#000]" /> },
+        { name: "Express", icon: <SiExpress className="text-[#000]" /> },
+        { name: "Bootstrap", icon: <SiBootstrap className="text-[#7952B3]" /> },
+        {
+          name: "Tailwind",
+          icon: <SiTailwindcss className="text-[#38B2AC]" />,
+        },
+      ],
+    },
+    {
+      category: "Developer Tools",
+      items: [
+        { name: "Git", icon: <FaGitAlt className="text-[#F05032]" /> },
+        { name: "Docker", icon: <FaDocker className="text-[#2496ED]" /> },
+        { name: "Firebase", icon: <SiFirebase className="text-[#FFCA28]" /> },
+        {
+          name: "Google Cloud",
+          icon: <SiGooglecloud className="text-[#4285F4]" />,
+        },
+        { name: "AWS", icon: <FaAws className="text-[#FF9900]" /> },
+        { name: "Azure", icon: <FaMicrosoft className="text-[#0078D4]" /> },
+        { name: "Vercel", icon: <SiVercel className="text-[#000]" /> },
+        { name: "XAMPP", icon: <SiXampp className="text-[#FB7A24]" /> },
+      ],
+    },
+  ];
+
+  return (
+    <section id="skills" className="py-20 bg-gray-50 dark:bg-gray-900">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-blue-600 dark:from-gray-200 dark:to-gray-400">
+            Technical Skills
+          </h2>
+          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Proficient in a wide range of technologies and tools for building
+            modern web applications
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {skills.map((group, index) => (
+            <motion.div
+              key={group.category}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-shadow"
+            >
+              <h3 className="text-2xl font-semibold mb-6 text-blue-500">
+                {group.category}
+              </h3>
+              <div className="grid grid-cols-2 gap-6">
+                {group.items.map((item) => (
+                  <motion.div
+                    key={item.name}
+                    whileHover={{ scale: 1.05 }}
+                    className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700"
+                  >
+                    <div className="text-2xl">{item.icon}</div>
+                    <span className="text-gray-700 dark:text-gray-300">
+                      {item.name}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Modern Contact Section
+function ContactSection() {
+  return (
+    <section id="contact" className="py-20 bg-gray-50 dark:bg-gray-900">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.5 }}
+          className="max-w-4xl mx-auto text-center"
+        >
+          <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-blue-600 dark:from-gray-200 dark:to-gray-400">
+            Get In Touch
+          </h2>
+          <p className="text-gray-600 dark:text-gray-400 mb-8">
+            Have a project in mind? Let's discuss how we can work together.
+          </p>
+          <motion.a
+            href="mailto:jimmynguyen2468@gmail.com"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-block px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:opacity-90 transition-opacity"
+          >
+            Email me here!
+          </motion.a>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// About Me Section
+function AboutMeSection() {
+  return (
+    <section id="about" className="py-20 bg-gray-50 dark:bg-gray-900">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.5 }}
+          className="max-w-4xl mx-auto"
+        >
+          <h2 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-blue-600 dark:from-gray-200 dark:to-gray-400 leading-[1.3] pb-2">
+            Hey there!
+          </h2>
+          <div className="space-y-6 text-gray-600 dark:text-gray-300">
+            <p className="text-lg md:text-xl">
+              My name is Jimmy Nguyen and I graduated from The University of
+              Texas at Dallas with a Bachelors of Science in Computer Science. I
+              am currently working at Tokio Marine HCC in a Rotational Program
+              as a IT Analyst.
+            </p>
+            <p className="text-lg md:text-xl">
+              I discovered coding back in 2017 in my sophomore coding class and
+              instantly fell in love. If you want to check out what I've coded
+              so far check out my Projects tab!
+            </p>
+            <p className="text-lg md:text-xl">
+              I have tons of experience with full stack web apps and am always
+              ready to launch into something new. Check out my LinkedIn if you
+              want to connect!
+            </p>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// Modern Experience Section
+function ExperienceSection() {
+  const experiences = [
+    {
+      title: "Cloud Engineer",
+      company: "Tokio Marine HCC",
+      period: "Jan 2025 - Present",
+      description:
+        "Working on cloud infrastructure and automation projects, focusing on AWS and Azure implementations.",
+      technologies: [
+        "Python",
+        "AWS",
+        "DevOps",
+        "Infrastructure as Code",
+        "Terraform",
+      ],
+      location: "Houston, TX",
+    },
+    {
+      title: "SOC Analyst",
+      company: "Tokio Marine HCC",
+      period: "Jul 2024 - Jan 2025",
+      description:
+        "Monitored and analyzed security events, investigated incidents, and implemented security measures.",
+      technologies: [
+        "Python",
+        "Security Monitoring",
+        "Incident Response",
+        "SIEM Tools",
+        "Phishing Analysis",
+      ],
+      location: "Houston, TX",
+    },
+    {
+      title: "Software Engineering Intern",
+      company: "Tokio Marine HCC",
+      period: "Jun 2023 - Aug 2023",
+      description:
+        "Developed and maintained internal web applications, collaborated with cross-functional teams.",
+      technologies: ["C#", "React", "Node.js", "SQL Server"],
+      location: "Houston, TX",
+    },
+    {
+      title: "DevOps Lead (Capstone Project)",
+      company: "Ellison Fluid Calipers",
+      period: "2024",
+      description:
+        "Led the implementation of CI/CD pipelines and infrastructure automation for a large-scale application.",
+      technologies: ["Docker", "Kubernetes", "Azure", "Terraform"],
+      location: "UTD",
+    },
+  ];
+
+  return (
+    <section id="experience" className="py-20 bg-white dark:bg-gray-800">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-blue-600 dark:from-gray-200 dark:to-gray-400">
+            Work Experience
+          </h2>
+          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            My professional journey and roles
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {experiences.map((experience, index) => (
+            <motion.div
+              key={experience.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="bg-white dark:bg-gray-700 rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-shadow"
+            >
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    {experience.title}
+                  </h3>
+                  <p className="text-blue-600 dark:text-blue-400 font-medium">
+                    {experience.company}
+                  </p>
+                </div>
+                <span className="text-gray-600 dark:text-gray-400">
+                  {experience.period}
+                </span>
+              </div>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                {experience.description}
+              </p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {experience.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded-full text-sm"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <p className="text-gray-500 dark:text-gray-400 text-sm">
+                {experience.location}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Main App Component
+export default function Home() {
+  const [darkMode, setDarkMode] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+
+  useEffect(() => {
+    // Check if user prefers dark mode
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setDarkMode(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Update dark mode class on document
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
+
+  return (
+    <main className="bg-gradient-to-br from-sky-100 via-blue-100 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <Navbar
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+        isMenuOpen={isMenuOpen}
+        setIsMenuOpen={setIsMenuOpen}
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
+      />
+      <HeroSection darkMode={darkMode} />
+      <AboutMeSection />
+      <ExperienceSection />
+      <SkillsSection />
+      <ContactSection />
+      <Footer />
+    </main>
+  );
+}
+
+// Add these styles at the top of your file, after the imports
+const styles = `
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(50px, 50px); }
+}
+
+@keyframes float-delayed {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-50px, 50px); }
+}
+
+@keyframes float-more-delayed {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(50px, -50px); }
+}
+
+.animate-float {
+  animation: float 15s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 20s ease-in-out infinite;
+}
+
+.animate-float-more-delayed {
+  animation: float-more-delayed 25s ease-in-out infinite;
+}
+`;
+
+// Add this style tag to your document
+if (typeof document !== "undefined") {
+  const styleSheet = document.createElement("style");
+  styleSheet.innerText = styles;
+  document.head.appendChild(styleSheet);
 }
