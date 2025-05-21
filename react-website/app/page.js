@@ -561,7 +561,7 @@ function ExperienceSection() {
     {
       title: "SOC Analyst",
       company: "Tokio Marine HCC",
-      period: "Jul 2024 - Jan 2025",
+      period: "Mar 2024 - Jan 2025",
       description:
         "Monitored and analyzed security events, investigated incidents, and implemented security measures.",
       technologies: [
