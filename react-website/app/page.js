@@ -31,7 +31,6 @@ import {
   FaGitAlt,
   FaAws,
   FaDatabase,
-  FaMicrosoft,
 } from "react-icons/fa";
 import {
   SiCplusplus,
@@ -47,6 +46,7 @@ import {
   SiVercel,
   SiXampp,
   SiNextdotjs,
+  SiMicrosoftazure,
 } from "react-icons/si";
 import Image from "next/image";
 import { Analytics } from "@vercel/analytics/next";
@@ -277,7 +277,7 @@ function ProfilePicture() {
     <div className="relative w-48 h-48 md:w-80 md:h-80 mb-8 mx-auto">
       <div className="absolute inset-0 rounded-full bg-gradient-to-br from-sky-400 via-blue-500 to-indigo-500 p-1">
         <Image
-          src="/profile.jpg"
+          src="/profile.JPG"
           alt="Jimmy Nguyen"
           width={320}
           height={320}
@@ -320,8 +320,8 @@ function HeroSection({ darkMode }) {
             Software Engineer & Full Stack Developer
           </h2>
           <p className="text-lg md:text-xl mb-12 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Building innovative solutions with modern technologies. Passionate
-            about creating impactful software that makes a difference.
+            Building innovative solutions and solving complex problems with
+            software that makes a difference.
           </p>
           <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-6 px-4 md:px-0">
             <motion.a
@@ -367,8 +367,8 @@ function SkillsSection() {
     {
       category: "Languages",
       items: [
-        { name: "Java", icon: <FaJava className="text-[#007396]" /> },
         { name: "Python", icon: <FaPython className="text-[#3776AB]" /> },
+        { name: "Java", icon: <FaJava className="text-[#007396]" /> },
         { name: "C++", icon: <SiCplusplus className="text-[#00599C]" /> },
         { name: "C#", icon: <SiCsharp className="text-[#239120]" /> },
         { name: "JavaScript", icon: <FaJs className="text-[#F7DF1E]" /> },
@@ -409,7 +409,10 @@ function SkillsSection() {
           icon: <SiGooglecloud className="text-[#4285F4]" />,
         },
         { name: "AWS", icon: <FaAws className="text-[#FF9900]" /> },
-        { name: "Azure", icon: <FaMicrosoft className="text-[#0078D4]" /> },
+        {
+          name: "Azure",
+          icon: <SiMicrosoftazure className="text-[#0078D4]" />,
+        },
         { name: "Vercel", icon: <SiVercel className="text-[#000]" /> },
         { name: "XAMPP", icon: <SiXampp className="text-[#FB7A24]" /> },
       ],
@@ -507,23 +510,31 @@ function AboutMeSection() {
   return (
     <section id="about" className="py-20 bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-white">
-          About Me
-        </h2>
-        <div className="max-w-3xl mx-auto">
-          <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-            Hey there! I&apos;m a passionate software engineer with a strong
-            foundation in both front-end and back-end development. I love
-            creating elegant solutions to complex problems and am always eager
-            to learn new technologies.
-          </p>
-          <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-            When I&apos;m not coding, you can find me exploring new
-            technologies, contributing to open-source projects, or enjoying
-            outdoor activities. I believe in continuous learning and staying
-            up-to-date with the latest industry trends.
-          </p>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.5 }}
+          className="max-w-4xl mx-auto"
+        >
+          <h2 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-blue-600 dark:from-gray-200 dark:to-gray-400 leading-[1.3] pb-2">
+            Hey there!
+          </h2>
+          <div className="space-y-6 text-gray-600 dark:text-gray-300">
+            <p className="text-lg md:text-xl">
+              My name is Jimmy Nguyen and I graduated from The University of
+              Texas at Dallas with a Bachelors of Science in Computer Science. I
+              am currently working at Tokio Marine HCC in a Rotational Program
+              as a Cloud Engineer.
+            </p>
+            <p className="text-lg md:text-xl">
+              I discovered coding back in 2017 in my sophomore coding class and
+              instantly fell in love. I have tons of experience with full stack
+              web apps and am always ready to launch into something new. Check
+              out my LinkedIn if you want to connect!
+            </p>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -574,7 +585,7 @@ function ExperienceSection() {
     {
       title: "DevOps Lead (Capstone Project)",
       company: "Ellison Fluid Calipers",
-      period: "2024",
+      period: "Jan 2024 - May 2024",
       description:
         "Led the implementation of CI/CD pipelines and infrastructure automation for a large-scale application.",
       technologies: ["Docker", "Kubernetes", "Azure", "Terraform"],
