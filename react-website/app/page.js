@@ -49,6 +49,7 @@ import {
   SiNextdotjs,
 } from "react-icons/si";
 import Image from "next/image";
+import { Analytics } from "@vercel/analytics/next";
 
 // Footer Component
 function Footer() {
@@ -282,7 +283,6 @@ function ProfilePicture() {
           height={320}
           className="rounded-full w-full h-full object-cover"
           priority
-          unoptimized
         />
       </div>
     </div>
@@ -686,6 +686,7 @@ export default function Home() {
       <SkillsSection />
       <ContactSection />
       <Footer />
+      <Analytics />
     </main>
   );
 }
