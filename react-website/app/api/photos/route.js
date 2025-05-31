@@ -28,41 +28,25 @@ function getManualDate(filename) {
 }
 
 export async function GET(request) {
+  const { searchParams } = new URL(request.url);
+  const tripId = searchParams.get("tripId");
+
+  if (!tripId) {
+    return NextResponse.json({ error: "Trip ID is required" }, { status: 400 });
+  }
+
   try {
-    const { searchParams } = new URL(request.url);
-    const tripId = searchParams.get("tripId");
-
-    if (!tripId) {
-      return NextResponse.json(
-        { error: "Trip ID is required" },
-        { status: 400 }
-      );
-    }
-
-    const tripDir = path.join(process.cwd(), "public", tripId);
-
-    // Check if directory exists
-    if (!fs.existsSync(tripDir)) {
-      // Return empty array if directory doesn't exist
-      return NextResponse.json({ photos: [] });
-    }
-
+    const tripDir = path.join(process.cwd(), "images", "trips", tripId);
     const files = fs.readdirSync(tripDir);
+
     const photos = files
       .filter((file) => /\.(jpg|jpeg|png|gif)$/i.test(file))
-      .map((file) => {
-        const filePath = path.join(tripDir, file);
-        const stats = fs.statSync(filePath);
-        const manualDate = getManualDate(file);
-
-        return {
-          id: file,
-          imageUrl: `/${tripId}/${file}`,
-          date:
-            manualDate || formatDate(stats.mtime.toISOString().split("T")[0]),
-        };
-      })
-      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      .map((file, index) => ({
+        id: index + 1,
+        src: `/api/photos/image?tripId=${tripId}&filename=${file}`,
+        alt: file.split(".")[0],
+        date: new Date().toISOString().split("T")[0], // You might want to extract this from the filename or metadata
+      }));
 
     return NextResponse.json({ photos });
   } catch (error) {
