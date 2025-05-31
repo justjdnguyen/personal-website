@@ -43,7 +43,7 @@ export default function PhotosPage() {
           >
             Recently got my hands on a film camera.
             <br />
-            Here's what I've been capturing.
+            Here&apos;s what I&apos;ve been capturing.
           </p>
           <div
             className="absolute -right-12 top-[80%] w-40 h-40"

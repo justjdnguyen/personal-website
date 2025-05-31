@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
+import Image from "next/image";
 
 const ANIMATION_DURATION = 500; // Duration in milliseconds
 
@@ -20,6 +21,16 @@ export default function ImageModal({
 
   // Minimum swipe distance (in px)
   const minSwipeDistance = 50;
+
+  const handleNext = useCallback(() => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % photos.length);
+  }, [photos.length]);
+
+  const handlePrev = useCallback(() => {
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + photos.length) % photos.length
+    );
+  }, [photos.length]);
 
   useEffect(() => {
     setCurrentIndex(initialIndex);
@@ -53,46 +64,22 @@ export default function ImageModal({
     }
   }, [isOpen, initialIndex]);
 
-  // Add keyboard event handling
+  // Handle keyboard navigation
   useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === "Escape") {
+    const handleKeyDown = (e) => {
+      if (!isOpen) return;
+      if (e.key === "ArrowRight") {
+        handleNext();
+      } else if (e.key === "ArrowLeft") {
+        handlePrev();
+      } else if (e.key === "Escape") {
         onClose();
       }
     };
 
-    const handleArrowKeys = (e) => {
-      if (e.key === "ArrowLeft" && currentIndex > 0) {
-        handlePrev();
-      } else if (e.key === "ArrowRight" && currentIndex < photos.length - 1) {
-        handleNext();
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("keydown", handleEscape);
-      document.addEventListener("keydown", handleArrowKeys);
-    }
-
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
-      document.removeEventListener("keydown", handleArrowKeys);
-    };
-  }, [isOpen, currentIndex, photos?.length]);
-
-  const handlePrev = () => {
-    if (currentIndex > 0) {
-      const newIndex = currentIndex - 1;
-      setCurrentIndex(newIndex);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentIndex < photos.length - 1) {
-      const newIndex = currentIndex + 1;
-      setCurrentIndex(newIndex);
-    }
-  };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, handleNext, handlePrev, onClose]);
 
   const onTouchStart = (e) => {
     setTouchEnd(null);
@@ -158,24 +145,16 @@ export default function ImageModal({
 
             <div
               ref={imageRef}
-              style={{
-                transformOrigin:
-                  window.innerWidth >= 768
-                    ? `${originX}% ${originY}%`
-                    : "50% 50%",
-              }}
-              className={`transition-all duration-${ANIMATION_DURATION} ease-out ${
-                isAnimating ? "scale-100 opacity-100" : "scale-90 opacity-0"
-              }`}
-              onTouchStart={onTouchStart}
-              onTouchMove={onTouchMove}
-              onTouchEnd={onTouchEnd}
+              className="relative w-full h-full flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
             >
-              <img
+              <Image
                 src={photos[currentIndex].imageUrl}
-                alt=""
-                className="max-h-[90vh] max-w-[90vw] object-contain rounded-lg"
-                onClick={(e) => e.stopPropagation()}
+                alt={photos[currentIndex].alt || "Photo"}
+                fill
+                className="object-contain"
+                sizes="100vw"
+                priority
               />
             </div>
 

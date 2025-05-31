@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import ImageModal from "./ImageModal";
+import Image from "next/image";
 
 export default function PhotoCard({
   photo,
@@ -29,11 +30,13 @@ export default function PhotoCard({
         className="group relative overflow-hidden rounded-lg bg-white shadow-sm transition-all duration-300 hover:shadow-md cursor-pointer flex flex-col border-2 border-gray-200"
         onClick={handleClick}
       >
-        <div className="aspect-[4/3] overflow-hidden rounded-b-lg">
-          <img
+        <div className="relative aspect-[4/3] overflow-hidden rounded-b-lg">
+          <Image
             src={currentPhoto.imageUrl}
-            alt=""
-            className="h-full w-full object-cover transition-all duration-300 group-hover:scale-105"
+            alt={currentPhoto.alt || "Photo"}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
           />
         </div>
         <div className="p-4 flex-shrink-0">
@@ -48,8 +51,7 @@ export default function PhotoCard({
       <ImageModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        photo={currentPhoto}
-        photos={photos}
+        images={photos}
         initialIndex={index}
         onPhotoClick={onPhotoClick}
       />
