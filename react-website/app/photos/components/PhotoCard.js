@@ -1,0 +1,58 @@
+"use client";
+import { useState } from "react";
+import ImageModal from "./ImageModal";
+
+export default function PhotoCard({
+  photo,
+  photos,
+  index,
+  blurb,
+  onPhotoClick,
+}) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    setIsModalOpen(true);
+  };
+
+  // Handle both single photo and photos array cases
+  const currentPhoto = photo || (photos && photos[index]);
+
+  if (!currentPhoto) {
+    return null;
+  }
+
+  return (
+    <>
+      <div
+        className="group relative overflow-hidden rounded-lg bg-white shadow-sm transition-all duration-300 hover:shadow-md cursor-pointer flex flex-col border-2 border-gray-200"
+        onClick={handleClick}
+      >
+        <div className="aspect-[4/3] overflow-hidden rounded-b-lg">
+          <img
+            src={currentPhoto.imageUrl}
+            alt=""
+            className="h-full w-full object-cover transition-all duration-300 group-hover:scale-105"
+          />
+        </div>
+        <div className="p-4 flex-shrink-0">
+          <time className="text-base font-medium text-gray-600">
+            {currentPhoto.date}
+          </time>
+          {blurb && (
+            <p className="mt-2 text-sm text-gray-700 line-clamp-2">{blurb}</p>
+          )}
+        </div>
+      </div>
+      <ImageModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        photo={currentPhoto}
+        photos={photos}
+        initialIndex={index}
+        onPhotoClick={onPhotoClick}
+      />
+    </>
+  );
+}
