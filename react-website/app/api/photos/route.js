@@ -36,16 +36,27 @@ export async function GET(request) {
   }
 
   try {
-    const tripDir = path.join(process.cwd(), "images", "trips", tripId);
-    const files = fs.readdirSync(tripDir);
+    const tripDir = path.join(
+      process.cwd(),
+      "public",
+      "images",
+      "trips",
+      tripId
+    );
 
+    // Check if directory exists
+    if (!fs.existsSync(tripDir)) {
+      return NextResponse.json({ photos: [] });
+    }
+
+    const files = fs.readdirSync(tripDir);
     const photos = files
       .filter((file) => /\.(jpg|jpeg|png|gif)$/i.test(file))
       .map((file, index) => ({
         id: index + 1,
-        src: `/api/photos/image?tripId=${tripId}&filename=${file}`,
+        src: `/images/trips/${tripId}/${file}`,
         alt: file.split(".")[0],
-        date: new Date().toISOString().split("T")[0], // You might want to extract this from the filename or metadata
+        date: new Date().toISOString().split("T")[0],
       }));
 
     return NextResponse.json({ photos });

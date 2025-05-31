@@ -17,6 +17,7 @@ export async function GET(request) {
   try {
     const imagePath = path.join(
       process.cwd(),
+      "public",
       "images",
       "trips",
       tripId,

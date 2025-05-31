@@ -14,6 +14,7 @@ export default function PhotoCard({
 
   const handleClick = (e) => {
     e.preventDefault();
+    console.log("PhotoCard Debug:", { photos, index, currentPhoto });
     setIsModalOpen(true);
   };
 
@@ -32,7 +33,7 @@ export default function PhotoCard({
       >
         <div className="relative aspect-[4/3] overflow-hidden rounded-b-lg">
           <Image
-            src={currentPhoto.imageUrl}
+            src={currentPhoto.src}
             alt={currentPhoto.alt || "Photo"}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -41,7 +42,11 @@ export default function PhotoCard({
         </div>
         <div className="p-4 flex-shrink-0">
           <time className="text-base font-medium text-gray-600">
-            {currentPhoto.date}
+            {new Date(currentPhoto.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
           </time>
           {blurb && (
             <p className="mt-2 text-sm text-gray-700 line-clamp-2">{blurb}</p>
@@ -51,9 +56,8 @@ export default function PhotoCard({
       <ImageModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        images={photos}
+        photos={photos}
         initialIndex={index}
-        onPhotoClick={onPhotoClick}
       />
     </>
   );
