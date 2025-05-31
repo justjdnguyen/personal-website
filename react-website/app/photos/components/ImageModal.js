@@ -18,22 +18,23 @@ export default function ImageModal({
   const [touchEnd, setTouchEnd] = useState(null);
   const imageRef = useRef(null);
   const modalRef = useRef(null);
+  const scrollPositionRef = useRef(0);
 
   // Minimum swipe distance (in px)
   const minSwipeDistance = 50;
 
   const handleNext = useCallback(() => {
-    if (!photos?.length || currentIndex >= photos.length - 1) return;
+    if (currentIndex >= photos.length - 1) return;
     setCurrentIndex((prevIndex) => prevIndex + 1);
-  }, [photos, currentIndex]);
+  }, [photos.length, currentIndex]);
 
   const handlePrev = useCallback(() => {
-    if (!photos?.length || currentIndex <= 0) return;
+    if (currentIndex <= 0) return;
     setCurrentIndex((prevIndex) => prevIndex - 1);
-  }, [photos, currentIndex]);
+  }, [currentIndex]);
 
   useEffect(() => {
-    setCurrentIndex(initialIndex || 0);
+    setCurrentIndex(initialIndex);
   }, [initialIndex]);
 
   // Set animation state when modal opens/closes
@@ -45,16 +46,26 @@ export default function ImageModal({
       });
       // Prevent scrolling on the body
       document.body.style.overflow = "hidden";
+
+      // Prevent wheel scrolling
+      const preventScroll = (e) => {
+        e.preventDefault();
+      };
+      document.addEventListener("wheel", preventScroll, { passive: false });
+      document.addEventListener("mousewheel", preventScroll, {
+        passive: false,
+      });
+
+      return () => {
+        document.body.style.overflow = "";
+        document.removeEventListener("wheel", preventScroll);
+        document.removeEventListener("mousewheel", preventScroll);
+      };
     } else {
       setIsAnimating(false);
       // Restore scrolling
       document.body.style.overflow = "";
     }
-
-    return () => {
-      // Cleanup: restore scrolling when component unmounts
-      document.body.style.overflow = "";
-    };
   }, [isOpen]);
 
   // Reset currentIndex when modal closes
@@ -115,10 +126,17 @@ export default function ImageModal({
   return (
     <div
       ref={modalRef}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 overflow-hidden"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 overflow-hidden touch-none"
+      style={{ touchAction: "none" }}
       onClick={onClose}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
     >
-      <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+      <div
+        className="relative w-full h-full flex items-center justify-center overflow-hidden touch-none"
+        style={{ touchAction: "none" }}
+      >
         <div className="flex flex-col items-center justify-center w-full h-full">
           <div className="flex items-center justify-center gap-4">
             {/* Desktop Navigation Buttons */}
@@ -129,7 +147,7 @@ export default function ImageModal({
               }}
               className={`hidden md:block text-white hover:text-gray-300 transition-all duration-300 group ${
                 currentIndex === 0
-                  ? "pointer-events-none opacity-0"
+                  ? "opacity-0 pointer-events-none"
                   : "opacity-100"
               }`}
             >
@@ -173,7 +191,7 @@ export default function ImageModal({
               }}
               className={`hidden md:block text-white hover:text-gray-300 transition-all duration-300 group ${
                 currentIndex === photos.length - 1
-                  ? "pointer-events-none opacity-0"
+                  ? "opacity-0 pointer-events-none"
                   : "opacity-100"
               }`}
             >
