@@ -40,7 +40,7 @@ export default function PhotoCard({
             sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
           />
         </div>
-        <div className="p-4 flex-shrink-0">
+        {/* <div className="p-4 flex-shrink-0">
           <time className="text-base font-medium text-gray-600">
             {new Date(currentPhoto.date).toLocaleDateString("en-US", {
               year: "numeric",
@@ -51,7 +51,7 @@ export default function PhotoCard({
           {blurb && (
             <p className="mt-2 text-sm text-gray-700 line-clamp-2">{blurb}</p>
           )}
-        </div>
+        </div> */}
       </div>
       <ImageModal
         isOpen={isModalOpen}
