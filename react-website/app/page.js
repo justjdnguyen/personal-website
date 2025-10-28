@@ -41,6 +41,7 @@ import {
   SiExpress,
   SiBootstrap,
   SiTailwindcss,
+  SiTerraform,
   SiFirebase,
   SiGooglecloud,
   SiVercel,
@@ -324,12 +325,14 @@ function HeroSection({ darkMode }) {
             Jimmy Nguyen
           </h1>
           <h2 className="text-2xl md:text-3xl mb-8 text-gray-700 dark:text-gray-300">
-            Software Engineer & Full Stack Developer
+            Cloud Engineer | Full Stack Developer
           </h2>
           <p className="text-lg md:text-xl mb-12 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Building innovative solutions and solving complex problems with
-            software that makes a difference.
+            Building and automating scalable cloud infrastructure and web
+            applications. Experienced with AWS, containerization, IaC, and
+            security automation.
           </p>
+
           <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-6 px-4 md:px-0">
             <motion.a
               whileHover={{ scale: 1.05 }}
@@ -388,6 +391,7 @@ function SkillsSection() {
           icon: <SiPostgresql className="text-[#336791]" />,
         },
         { name: "MySQL", icon: <SiMysql className="text-[#4479A1]" /> },
+        { name: "Terraform", icon: <SiTerraform className="text-[#7B42BC]" /> },
       ],
     },
     {
@@ -496,7 +500,8 @@ function ContactSection() {
             Get In Touch
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mb-8">
-            Have a project in mind? Let&apos;s discuss how we can work together.
+            Interested in collaborating? Reach out and let’s discuss how we can
+            work together.
           </p>
           <motion.a
             href="mailto:jimmynguyen2468@gmail.com"
@@ -529,23 +534,23 @@ function AboutMeSection() {
           </h2>
           <div className="space-y-6 text-gray-600 dark:text-gray-300">
             <p className="text-lg md:text-xl">
-              My name is Jimmy Nguyen and I graduated from The University of
-              Texas at Dallas with a Bachelors of Science in Computer Science. I
-              am currently working at Tokio Marine HCC as a Cloud Engineer.
+              My name is Jimmy Nguyen. I graduated from The University of Texas
+              at Dallas with a B.Sc. in Computer Science, and I’m currently a
+              Cloud Engineer at Tokio Marine HCC.
             </p>
             <p className="text-lg md:text-xl">
-              I discovered coding back in 2017 in my sophomore coding class and
-              instantly fell in love. I have tons of experience with full stack
-              web apps and am always ready to launch into something new. Check
-              out my LinkedIn if you want to connect!
+              I started coding in 2017 during a sophomore coding class and
+              instantly fell in love with development. I have experience
+              building full stack web apps and enjoy tackling new challenges in
+              cloud and web technologies.
             </p>
             <div className="mt-12">
               <h3 className="text-2xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-blue-600 dark:from-gray-200 dark:to-gray-400">
                 Beyond Code
               </h3>
               <p className="text-lg md:text-xl mb-8">
-                Recently got into snowboarding and film photography. Check out
-                my photos from the slopes and more.
+                Outside of coding, I enjoy snowboarding and film photography.
+                Check out my photos from the slopes and more.
               </p>
               <motion.a
                 href="/photos"
@@ -583,7 +588,7 @@ function ExperienceSection() {
       company: "Tokio Marine HCC",
       period: "Jan 2025 - Present",
       description:
-        "Working on cloud infrastructure and automation projects, focusing on AWS and Azure implementations.",
+        "Working on cloud infrastructure, automation, and deployment projects using AWS, Docker, and Terraform.",
       technologies: [
         "Python",
         "AWS",
@@ -613,18 +618,9 @@ function ExperienceSection() {
       company: "Tokio Marine HCC",
       period: "Jun 2023 - Aug 2023",
       description:
-        "Developed and maintained internal web applications, collaborated with cross-functional teams.",
+        "Developed and maintained internal web applications while collaborating with cross-functional teams.",
       technologies: ["C#", "React", "Node.js", "SQL Server"],
       location: "Houston, TX",
-    },
-    {
-      title: "DevOps Lead (Capstone Project)",
-      company: "Ellison Fluid Calipers",
-      period: "Jan 2024 - May 2024",
-      description:
-        "Led the implementation of CI/CD pipelines and infrastructure automation for a large-scale application.",
-      technologies: ["Docker", "Kubernetes", "Azure", "Terraform"],
-      location: "UTD",
     },
   ];
 
