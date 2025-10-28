@@ -357,7 +357,7 @@ function HeroSection({ darkMode }) {
             <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              href="/Jimmy_Nguyen_Resume.pdf"
+              href="https://drive.google.com/uc?export=download&id=1jAv9J5F9VM5raIxA-2tRA4UOz7sD2y-t"
               download
               className="w-48 md:w-auto px-6 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full flex items-center justify-center gap-2 hover:shadow-lg transition-shadow mx-auto md:mx-0"
             >
