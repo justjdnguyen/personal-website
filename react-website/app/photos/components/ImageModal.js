@@ -1,296 +1,150 @@
 "use client";
 import { useEffect, useState, useRef, useCallback } from "react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
-const ANIMATION_DURATION = 500; // Duration in milliseconds
-
-export default function ImageModal({
-  isOpen,
-  onClose,
-  photos,
-  initialIndex,
-  originX,
-  originY,
-}) {
+export default function ImageModal({ isOpen, onClose, photos, initialIndex }) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
-  const [isAnimating, setIsAnimating] = useState(false);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
-  const imageRef = useRef(null);
-  const modalRef = useRef(null);
-  const scrollPositionRef = useRef(0);
-
-  // Minimum swipe distance (in px)
   const minSwipeDistance = 50;
 
   const handleNext = useCallback(() => {
-    if (currentIndex >= photos.length - 1) return;
-    setCurrentIndex((prevIndex) => prevIndex + 1);
-  }, [photos.length, currentIndex]);
+    if (currentIndex < photos.length - 1) setCurrentIndex((i) => i + 1);
+  }, [currentIndex, photos.length]);
 
   const handlePrev = useCallback(() => {
-    if (currentIndex <= 0) return;
-    setCurrentIndex((prevIndex) => prevIndex - 1);
+    if (currentIndex > 0) setCurrentIndex((i) => i - 1);
   }, [currentIndex]);
 
+  useEffect(() => { setCurrentIndex(initialIndex); }, [initialIndex]);
+
   useEffect(() => {
-    setCurrentIndex(initialIndex);
-  }, [initialIndex]);
-
-  // Set animation state when modal opens/closes
-  useEffect(() => {
-    if (isOpen) {
-      // Small delay to ensure the modal is mounted before animation starts
-      requestAnimationFrame(() => {
-        setIsAnimating(true);
-      });
-      // Prevent scrolling on the body
-      document.body.style.overflow = "hidden";
-
-      // Prevent wheel scrolling
-      const preventScroll = (e) => {
-        e.preventDefault();
-      };
-      document.addEventListener("wheel", preventScroll, { passive: false });
-      document.addEventListener("mousewheel", preventScroll, {
-        passive: false,
-      });
-
-      return () => {
-        document.body.style.overflow = "";
-        document.removeEventListener("wheel", preventScroll);
-        document.removeEventListener("mousewheel", preventScroll);
-      };
-    } else {
-      setIsAnimating(false);
-      // Restore scrolling
+    if (!isOpen) return;
+    document.body.style.overflow = "hidden";
+    const preventScroll = (e) => e.preventDefault();
+    document.addEventListener("wheel", preventScroll, { passive: false });
+    return () => {
       document.body.style.overflow = "";
-    }
+      document.removeEventListener("wheel", preventScroll);
+    };
   }, [isOpen]);
 
-  // Reset currentIndex when modal closes
   useEffect(() => {
-    if (!isOpen) {
-      setCurrentIndex(initialIndex);
-    }
-  }, [isOpen, initialIndex]);
-
-  // Handle keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (!isOpen) return;
-      if (e.key === "ArrowRight") {
-        handleNext();
-      } else if (e.key === "ArrowLeft") {
-        handlePrev();
-      } else if (e.key === "Escape") {
-        onClose();
-      }
+    if (!isOpen) { setCurrentIndex(initialIndex); return; }
+    const onKey = (e) => {
+      if (e.key === "ArrowRight") handleNext();
+      else if (e.key === "ArrowLeft") handlePrev();
+      else if (e.key === "Escape") onClose();
     };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isOpen, handleNext, handlePrev, onClose, initialIndex]);
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, handleNext, handlePrev, onClose]);
-
-  const onTouchStart = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
+  const onTouchStart = (e) => { setTouchEnd(null); setTouchStart(e.targetTouches[0].clientX); };
+  const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX);
   const onTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe && currentIndex < photos.length - 1) {
-      handleNext();
-    }
-    if (isRightSwipe && currentIndex > 0) {
-      handlePrev();
-    }
+    const d = touchStart - touchEnd;
+    if (d > minSwipeDistance) handleNext();
+    if (d < -minSwipeDistance) handlePrev();
   };
 
   if (!isOpen || !photos?.length) return null;
 
-  console.log("Modal Debug:", {
-    photos,
-    currentIndex,
-    currentPhoto: photos[currentIndex],
-  });
-
   return (
-    <div
-      ref={modalRef}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 overflow-hidden touch-none"
-      style={{ touchAction: "none" }}
-      onClick={onClose}
-      onTouchStart={onTouchStart}
-      onTouchMove={onTouchMove}
-      onTouchEnd={onTouchEnd}
-    >
-      <div
-        className="relative w-full h-full flex items-center justify-center overflow-hidden touch-none"
+    <AnimatePresence>
+      <motion.div
+        key="modal"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25 }}
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/95"
         style={{ touchAction: "none" }}
+        onClick={onClose}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
       >
-        <div className="flex flex-col items-center justify-center w-full h-full">
-          <div className="flex items-center justify-center gap-4">
-            {/* Desktop Navigation Buttons */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handlePrev();
-              }}
-              className={`hidden md:block text-white hover:text-gray-300 transition-all duration-300 group ${
-                currentIndex === 0
-                  ? "opacity-0 pointer-events-none"
-                  : "opacity-100"
-              }`}
-            >
-              <div className="p-2 rounded-full border-2 border-transparent group-hover:border-white/30 transition-all duration-300">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
-              </div>
-            </button>
-
-            <div
-              ref={imageRef}
-              className="relative flex items-center justify-center"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Image
-                src={photos[currentIndex].src}
-                alt={photos[currentIndex].alt || "Photo"}
-                width={1200}
-                height={800}
-                className="max-h-[80vh] w-auto object-contain rounded-lg"
-                priority
-              />
-            </div>
-
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleNext();
-              }}
-              className={`hidden md:block text-white hover:text-gray-300 transition-all duration-300 group ${
-                currentIndex === photos.length - 1
-                  ? "opacity-0 pointer-events-none"
-                  : "opacity-100"
-              }`}
-            >
-              <div className="p-2 rounded-full border-2 border-transparent group-hover:border-white/30 transition-all duration-300">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </div>
-            </button>
-          </div>
-
-          {/* Mobile Navigation Buttons */}
-          <div className="md:hidden flex justify-center items-center gap-2 mt-2">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handlePrev();
-              }}
-              className={`p-3 bg-black bg-opacity-50 rounded-full text-white hover:text-gray-200 transition-all duration-300 ${
-                currentIndex === 0
-                  ? "pointer-events-none opacity-0"
-                  : "opacity-100"
-              }`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 19.5L8.25 12l7.5-7.5"
-                />
-              </svg>
-            </button>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleNext();
-              }}
-              className={`p-3 bg-black bg-opacity-50 rounded-full text-white hover:text-gray-200 transition-all duration-300 ${
-                currentIndex === photos.length - 1
-                  ? "pointer-events-none opacity-0"
-                  : "opacity-100"
-              }`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                />
-              </svg>
-            </button>
-          </div>
+        {/* Counter */}
+        <div className="absolute top-5 left-1/2 -translate-x-1/2 font-[var(--font-outfit)] text-xs text-white/40 tracking-widest">
+          {currentIndex + 1} / {photos.length}
         </div>
 
+        {/* Close */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-white hover:text-gray-200"
+          className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center text-white/50 hover:text-white transition-colors"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
+          <svg viewBox="0 0 14 14" fill="none" className="w-4 h-4">
+            <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
           </svg>
         </button>
-      </div>
-    </div>
+
+        {/* Prev */}
+        <button
+          onClick={(e) => { e.stopPropagation(); handlePrev(); }}
+          className={`absolute left-5 top-1/2 -translate-y-1/2 w-10 h-10 hidden md:flex items-center justify-center text-white/40 hover:text-white transition-all duration-200 ${
+            currentIndex === 0 ? "opacity-0 pointer-events-none" : ""
+          }`}
+        >
+          <svg viewBox="0 0 14 14" fill="none" className="w-5 h-5">
+            <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+
+        {/* Image */}
+        <motion.div
+          key={currentIndex}
+          initial={{ opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          className="relative flex items-center justify-center px-16"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Image
+            src={photos[currentIndex].src}
+            alt={photos[currentIndex].alt || "Photo"}
+            width={1200}
+            height={900}
+            className="max-h-[85vh] w-auto object-contain rounded-lg"
+            priority
+          />
+        </motion.div>
+
+        {/* Next */}
+        <button
+          onClick={(e) => { e.stopPropagation(); handleNext(); }}
+          className={`absolute right-5 top-1/2 -translate-y-1/2 w-10 h-10 hidden md:flex items-center justify-center text-white/40 hover:text-white transition-all duration-200 ${
+            currentIndex === photos.length - 1 ? "opacity-0 pointer-events-none" : ""
+          }`}
+        >
+          <svg viewBox="0 0 14 14" fill="none" className="w-5 h-5">
+            <path d="M5 2l5 5-5 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+
+        {/* Mobile nav */}
+        <div className="md:hidden absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-4">
+          <button
+            onClick={(e) => { e.stopPropagation(); handlePrev(); }}
+            className={`p-3 rounded-full bg-white/10 text-white transition-all ${currentIndex === 0 ? "opacity-0 pointer-events-none" : ""}`}
+          >
+            <svg viewBox="0 0 14 14" fill="none" className="w-4 h-4">
+              <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); handleNext(); }}
+            className={`p-3 rounded-full bg-white/10 text-white transition-all ${currentIndex === photos.length - 1 ? "opacity-0 pointer-events-none" : ""}`}
+          >
+            <svg viewBox="0 0 14 14" fill="none" className="w-4 h-4">
+              <path d="M5 2l5 5-5 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </motion.div>
+    </AnimatePresence>
   );
 }

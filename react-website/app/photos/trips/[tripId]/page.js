@@ -4,6 +4,14 @@ import { useParams } from "next/navigation";
 import PhotoCard from "../../components/PhotoCard";
 import Navbar from "../../components/Navbar";
 import Link from "next/link";
+import { motion } from "framer-motion";
+
+const tripMeta = {
+  "japan-2025":        { name: "Japan",    sub: "April 2025" },
+  "loveland-apr-2025": { name: "Loveland", sub: "April 2025" },
+  "loveland-mar-2025": { name: "Loveland", sub: "March 2025" },
+  "loveland-feb-2025": { name: "Loveland", sub: "February 2025" },
+};
 
 export default function TripPage() {
   const params = useParams();
@@ -11,129 +19,108 @@ export default function TripPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const tripId = params?.tripId;
+  const meta = tripMeta[tripId] || { name: tripId, sub: "" };
+
   useEffect(() => {
+    if (!tripId) return;
     async function loadPhotos() {
       try {
         setLoading(true);
         setError(null);
-        const resolvedParams = await params;
-        const response = await fetch(
-          `/api/photos?tripId=${resolvedParams.tripId}`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to load photos");
-        }
-        const data = await response.json();
+        const res = await fetch(`/api/photos?tripId=${tripId}`);
+        if (!res.ok) throw new Error("Failed to load photos");
+        const data = await res.json();
         setPhotos(data.photos);
       } catch (err) {
-        console.error("Error loading photos:", err);
         setError("Failed to load photos. Please try again later.");
       } finally {
         setLoading(false);
       }
     }
-
     loadPhotos();
-  }, [params]);
+  }, [tripId]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-white">
-        <Navbar />
-        <div className="pt-16">
-          <div className="max-w-[1920px] mx-auto px-2 sm:px-4 lg:px-6 py-8">
-            <div className="flex justify-start mb-4">
-              <div className="inline-flex items-center text-gray-900">
-                <svg
-                  className="w-5 h-5 transition-transform duration-200 translate-y-[1px]"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <span className="leading-none align-middle text-base ml-1">
-                  ALL TRIPS
-                </span>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="aspect-[4/3] bg-gray-100 rounded-lg" />
-              ))}
-            </div>
-          </div>
+  const skeleton = (
+    <div className="min-h-screen bg-white">
+      <Navbar />
+      <div className="pt-28 max-w-6xl mx-auto px-6 pb-28">
+        <div className="mb-12 h-20 w-48 bg-stone-100 rounded-xl animate-pulse" />
+        <div className="columns-2 md:columns-3 lg:columns-4" style={{ columnGap: "0.75rem" }}>
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="break-inside-avoid aspect-[3/4] bg-stone-100 rounded-xl animate-pulse" />
+          ))}
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 
-  if (error) {
-    return (
-      <div className="min-h-screen bg-white">
-        <Navbar />
-        <div className="pt-16">
-          <div className="max-w-[1920px] mx-auto px-2 sm:px-4 lg:px-6 py-8">
-            <div className="text-gray-900 text-center">
-              <h2 className="text-xl font-semibold mb-2">Error</h2>
-              <p>{error}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return skeleton;
 
-  if (photos.length === 0) {
-    return (
-      <div className="min-h-screen bg-white">
-        <Navbar />
-        <div className="pt-16">
-          <div className="max-w-[1920px] mx-auto px-2 sm:px-4 lg:px-6 py-8">
-            <div className="text-gray-900 text-center">
-              <h2 className="text-xl font-semibold mb-2">No Photos Yet</h2>
-              <p>Photos for this trip will be added soon.</p>
-            </div>
-          </div>
-        </div>
+  if (error) return (
+    <div className="min-h-screen bg-white">
+      <Navbar />
+      <div className="pt-28 flex items-center justify-center">
+        <p className="font-[var(--font-outfit)] text-stone-500">{error}</p>
       </div>
-    );
-  }
+    </div>
+  );
+
+  if (photos.length === 0) return (
+    <div className="min-h-screen bg-white">
+      <Navbar />
+      <div className="pt-28 flex flex-col items-center justify-center gap-3">
+        <p className="font-[var(--font-cormorant)] text-3xl text-[#0D0D0D]">No photos yet.</p>
+        <p className="font-[var(--font-outfit)] text-stone-400 text-sm">Check back soon.</p>
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-      <div className="pt-16">
-        <div className="max-w-[1920px] mx-auto px-2 sm:px-4 lg:px-6 py-8">
-          <div className="flex justify-start mb-4">
+      <div className="pt-28 max-w-6xl mx-auto px-6 pb-28">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-14"
+        >
+          <motion.div whileHover={{ x: -3 }} className="inline-block mb-6">
             <Link
               href="/photos/trips"
-              className="inline-flex items-center gap-1 text-gray-900 hover:text-gray-700 transition-colors duration-200 group"
+              className="inline-flex items-center gap-2 font-[var(--font-outfit)] text-sm text-stone-400 hover:text-[#0D0D0D] transition-colors"
             >
-              <svg
-                className="w-5 h-5 transition-transform duration-200 group-hover:-translate-x-1 translate-y-[1px]"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                  clipRule="evenodd"
-                />
+              <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none">
+                <path d="M13 7H1M6 2L1 7l5 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              <span className="leading-none align-middle text-base">
-                ALL TRIPS
-              </span>
+              All trips
             </Link>
+          </motion.div>
+          <div>
+            <p className="font-[var(--font-outfit)] text-xs tracking-[0.22em] uppercase text-stone-400 mb-2">{meta.sub}</p>
+            <h1 className="font-[var(--font-cormorant)] font-light text-6xl text-[#0D0D0D]">
+              {meta.name}
+              <span className="font-semibold italic">.</span>
+            </h1>
+            <p className="font-[var(--font-outfit)] text-sm text-stone-400 mt-2">{photos.length} photos</p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4">
-            {photos.map((photo, index) => (
-              <PhotoCard key={photo.id} photos={photos} index={index} />
-            ))}
-          </div>
+        </motion.div>
+
+        {/* Masonry grid */}
+        <div className="columns-2 md:columns-3 lg:columns-4" style={{ columnGap: "0.75rem" }}>
+          {photos.map((photo, index) => (
+            <motion.div
+              key={photo.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: Math.min(index * 0.03, 0.6) }}
+              className="break-inside-avoid mb-3"
+            >
+              <PhotoCard photos={photos} index={index} />
+            </motion.div>
+          ))}
         </div>
       </div>
     </div>
