@@ -83,20 +83,33 @@ async function getPhotosFromLocal(tripId) {
 // ─── Handler ──────────────────────────────────────────────────────────────────
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
+
+  const tripIdsParam = searchParams.get("tripIds");
   const tripId = searchParams.get("tripId");
 
-  if (!tripId) {
-    return NextResponse.json({ error: "Trip ID is required" }, { status: 400 });
+  const ids = tripIdsParam
+    ? tripIdsParam.split(",").map((s) => s.trim()).filter(Boolean)
+    : (tripId ? [tripId] : []);
+
+  if (ids.length === 0) {
+    return NextResponse.json(
+      { error: "tripId or tripIds is required" },
+      { status: 400 }
+    );
   }
 
   try {
-    const photos = R2_URL
-      ? await getPhotosFromR2(tripId)
-      : await getPhotosFromLocal(tripId);
+    const lists = await Promise.all(
+      ids.map(async (id) => {
+        const photos = R2_URL
+          ? await getPhotosFromR2(id)
+          : await getPhotosFromLocal(id);
+        return photos ?? [];
+      })
+    );
 
-    if (!photos) {
-      return NextResponse.json({ photos: [] });
-    }
+    // Flatten + re-number ids so React keys stay unique
+    const photos = lists.flat().map((p, i) => ({ ...p, id: i + 1 }));
 
     return NextResponse.json({ photos });
   } catch (error) {

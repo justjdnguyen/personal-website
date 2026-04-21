@@ -4,12 +4,16 @@ import path from "path";
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
+  const tripIdsParam = searchParams.get("tripIds");
   const tripId = searchParams.get("tripId");
-  const filename = searchParams.get("filename");
 
-  if (!tripId || !filename) {
+  const ids = tripIdsParam
+    ? tripIdsParam.split(",").map((s) => s.trim()).filter(Boolean)
+    : (tripId ? [tripId] : []);
+
+  if (ids.length === 0) {
     return NextResponse.json(
-      { error: "Trip ID and filename are required" },
+      { error: "tripId or tripIds is required" },
       { status: 400 }
     );
   }

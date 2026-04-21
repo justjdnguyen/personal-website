@@ -3,19 +3,69 @@ import Link from "next/link";
 import Image from "next/image";
 import Navbar from "./components/Navbar";
 import { motion } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const R2 = process.env.NEXT_PUBLIC_R2_URL;
 
 const trips = [
-  { id: "japan-2025",        name: "Japan",    sub: "2025",     path: "/photos/trips/japan-2025",        cover: `${R2}/trips/japan-2025/thumbs/1-0704401-R2-032-14A.webp` },
-  { id: "loveland-apr-2025", name: "Loveland", sub: "Apr 2025", path: "/photos/trips/loveland-apr-2025", cover: `${R2}/trips/loveland-apr-2025/thumbs/1-0704401-R5-071-34.webp` },
-  { id: "loveland-mar-2025", name: "Loveland", sub: "Mar 2025", path: "/photos/trips/loveland-mar-2025", cover: `${R2}/trips/loveland-mar-2025/thumbs/0704401_0704401-R5-041-19.webp` },
-  { id: "loveland-feb-2025", name: "Loveland", sub: "Feb 2025", path: "/photos/trips/loveland-feb-2025", cover: `${R2}/trips/loveland-feb-2025/thumbs/0704401_0704401-R3-051-24.webp` },
+  { id: "sydney-2025",       name: "Sydney",   sub: "Nov 2025", path: "/photos/trips/sydney-2025",       cover: `${R2}/trips/sydney-2025/thumbs/0388383_0388383-R1-005-1.webp` },
+  { id: "melbourne-2025",    name: "Melbourne",sub: "Nov 2025", path: "/photos/trips/melbourne-2025",    cover: `${R2}/trips/melbourne-2025/thumbs/0388383_0388383-R2-056-26A.webp` },
+  { id: "sf-2025",           name: "San Francisco",  sub: "Sep 2025", path: "/photos/trips/sf-2025",     cover: `${R2}/trips/sf-2025/thumbs/0388383_0388383-R2-042-19A.webp` },
+  { id: "austin-2025",       name: "Austin",   sub: "May 2025", path: "/photos/trips/austin-2025",       cover: `${R2}/trips/austin-2025/thumbs/0388383_0388383-R2-004-0A.webp` },
+  { id: "japan-2025",        name: "Japan",    sub: "Apr 2025", path: "/photos/trips/japan-2025",        cover: `${R2}/trips/japan-2025/thumbs/1-0704401-R2-032-14A.webp` },
+  { id: "loveland-2025",     name: "Loveland", sub: "Feb–Apr 2025", path: "/photos/trips/loveland-2025", cover: `${R2}/trips/loveland-apr-2025/thumbs/1-0704401-R5-071-34.webp` },
 ];
 
 export default function PhotosPage() {
   const scrollRef = useRef(null);
+
+  const hoverDirRef = useRef(0);
+  const rafRef = useRef(null);
+  const lastTRef = useRef(0);
+  const vRef = useRef(0); // current velocity (px/s)
+  
+  const MAX_V = 650;   // top speed (px/s) — lower = slower
+  const ACCEL = 2600;  // acceleration (px/s^2) — lower = softer ramp
+  
+  const step = (t) => {
+    const el = scrollRef.current;
+    const dir = hoverDirRef.current;
+    if (!el || dir === 0) return;
+  
+    const lastT = lastTRef.current || t;
+    const dt = Math.min(0.032, (t - lastT) / 1000); // clamp to avoid jumps
+    lastTRef.current = t;
+  
+    // ramp velocity toward target
+    const targetV = dir * MAX_V;
+    const dv = Math.sign(targetV - vRef.current) * ACCEL * dt;
+    if (Math.abs(targetV - vRef.current) <= Math.abs(dv)) vRef.current = targetV;
+    else vRef.current += dv;
+  
+    // stop at ends
+    if (dir < 0 && el.scrollLeft <= 0) return;
+    if (dir > 0 && el.scrollLeft + el.clientWidth >= el.scrollWidth) return;
+  
+    el.scrollBy({ left: vRef.current * dt, behavior: "auto" });
+    rafRef.current = requestAnimationFrame(step);
+  };
+  
+  const startHoverScroll = (dir) => {
+    hoverDirRef.current = dir;
+    if (rafRef.current == null) {
+      lastTRef.current = 0;
+      rafRef.current = requestAnimationFrame(step);
+    }
+  };
+  
+  const stopHoverScroll = () => {
+    hoverDirRef.current = 0;
+    vRef.current = 0;
+    lastTRef.current = 0;
+    if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+    rafRef.current = null;
+  };
+  useEffect(() => () => stopHoverScroll(), []);
 
   return (
     <div className="min-h-screen bg-white">
@@ -54,6 +104,15 @@ export default function PhotosPage() {
 
       {/* Carousel */}
       <section className="relative pb-28">
+                {/* Hover zones (desktop) */}
+                <div className="hidden md:block absolute left-0 top-0 bottom-0 w-16 z-20"
+             onMouseEnter={() => startHoverScroll(-1)}
+             onMouseLeave={stopHoverScroll}
+        />
+        <div className="hidden md:block absolute right-0 top-0 bottom-0 w-16 z-20"
+             onMouseEnter={() => startHoverScroll(1)}
+             onMouseLeave={stopHoverScroll}
+        />
         {/* Fade-off gradient on the right */}
         <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-40 z-10 bg-gradient-to-l from-white to-transparent" />
 

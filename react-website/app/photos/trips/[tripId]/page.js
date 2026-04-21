@@ -7,10 +7,15 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 const tripMeta = {
+  "sydney-2025":       { name: "Sydney",   sub: "November 2025" },
+  "melbourne-2025":    { name: "Melbourne", sub: "November 2025" },
+  "sf-2025":           { name: "San Francisco",  sub: "September 2025" },
+  "austin-2025":       { name: "Austin",   sub: "May 2025" },
   "japan-2025":        { name: "Japan",    sub: "April 2025" },
   "loveland-apr-2025": { name: "Loveland", sub: "April 2025" },
   "loveland-mar-2025": { name: "Loveland", sub: "March 2025" },
   "loveland-feb-2025": { name: "Loveland", sub: "February 2025" },
+  "loveland-2025":     { name: "Loveland", sub: "Feb-Apr 2025" },
 };
 
 export default function TripPage() {
@@ -28,7 +33,12 @@ export default function TripPage() {
       try {
         setLoading(true);
         setError(null);
-        const res = await fetch(`/api/photos?tripId=${tripId}`);
+        const lovelandIds = ["loveland-feb-2025", "loveland-mar-2025", "loveland-apr-2025"];
+        const url =
+          tripId === "loveland-2025"
+            ? `/api/photos?tripIds=${lovelandIds.join(",")}`
+            : `/api/photos?tripId=${tripId}`;
+        const res = await fetch(url);
         if (!res.ok) throw new Error("Failed to load photos");
         const data = await res.json();
         setPhotos(data.photos);

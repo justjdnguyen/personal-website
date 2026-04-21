@@ -1,14 +1,16 @@
 "use client";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 const trips = [
-  { id: "japan-2025",       name: "Japan 2025",        path: "/photos/trips/japan-2025",       date: { year: 2025, month: 4 } },
-  { id: "loveland-apr-2025", name: "Loveland Apr 2025", path: "/photos/trips/loveland-apr-2025", date: { year: 2025, month: 3 } },
-  { id: "loveland-mar-2025", name: "Loveland Mar 2025", path: "/photos/trips/loveland-mar-2025", date: { year: 2025, month: 2 } },
-  { id: "loveland-feb-2025", name: "Loveland Feb 2025", path: "/photos/trips/loveland-feb-2025", date: { year: 2025, month: 1 } },
+  { id: "sydney-2025",    name: "Sydney",        path: "/photos/trips/sydney-2025",    date: { year: 2025, month: 11 } },
+  { id: "melbourne-2025", name: "Melbourne",     path: "/photos/trips/melbourne-2025", date: { year: 2025, month: 11 } },
+  { id: "sf-2025",        name: "San Francisco", path: "/photos/trips/sf-2025",        date: { year: 2025, month: 9 } },
+  { id: "austin-2025",    name: "Austin",        path: "/photos/trips/austin-2025",    date: { year: 2025, month: 5 } },
+  { id: "japan-2025",     name: "Japan",    path: "/photos/trips/japan-2025",     date: { year: 2025, month: 4 } },
+  { id: "loveland-2025",  name: "Loveland",      path: "/photos/trips/loveland-2025",  date: { year: 2025, month: 4 } },
 ];
 
 const sortedTrips = [...trips].sort((a, b) => {
@@ -20,12 +22,30 @@ export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [tripsOpen, setTripsOpen] = useState(false);
+  const closeTimerRef = useRef(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    };
+  }, []);
+
+  const openTrips = () => {
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = null;
+    setTripsOpen(true);
+  };
+
+  const closeTripsSoon = () => {
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = setTimeout(() => setTripsOpen(false), 180);
+  };
 
   return (
     <motion.nav
@@ -59,8 +79,8 @@ export default function Navbar() {
         {/* Trips dropdown */}
         <div
           className="relative"
-          onMouseEnter={() => setTripsOpen(true)}
-          onMouseLeave={() => setTripsOpen(false)}
+          onMouseEnter={openTrips}
+          onMouseLeave={closeTripsSoon}
         >
           <button
             onClick={() => setTripsOpen((o) => !o)}
@@ -85,6 +105,8 @@ export default function Navbar() {
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.2 }}
                 className="absolute top-full right-0 mt-3 w-52 bg-white border border-stone-100 rounded-xl shadow-xl overflow-hidden"
+                onMouseEnter={openTrips}
+                onMouseLeave={closeTripsSoon}
               >
                 <Link
                   href="/photos/trips"

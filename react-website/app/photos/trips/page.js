@@ -6,10 +6,12 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 const trips = [
+  { id: "sydney-2025",       name: "Sydney",   sub: "Nov 2025", path: "/photos/trips/sydney-2025",       date: { year: 2025, month: 11 } },
+  { id: "melbourne-2025",    name: "Melbourne",sub: "Nov 2025", path: "/photos/trips/melbourne-2025",    date: { year: 2025, month: 11 } },
+  { id: "sf-2025",           name: "San Francisco",  sub: "Sep 2025", path: "/photos/trips/sf-2025",     date: { year: 2025, month: 9 } },
+  { id: "austin-2025",       name: "Austin",   sub: "May 2025", path: "/photos/trips/austin-2025",       date: { year: 2025, month: 5 } },
   { id: "japan-2025",        name: "Japan",        sub: "April 2025",    path: "/photos/trips/japan-2025",       date: { year: 2025, month: 4 } },
-  { id: "loveland-apr-2025", name: "Loveland",     sub: "April 2025",    path: "/photos/trips/loveland-apr-2025", date: { year: 2025, month: 3 } },
-  { id: "loveland-mar-2025", name: "Loveland",     sub: "March 2025",    path: "/photos/trips/loveland-mar-2025", date: { year: 2025, month: 2 } },
-  { id: "loveland-feb-2025", name: "Loveland",     sub: "February 2025", path: "/photos/trips/loveland-feb-2025", date: { year: 2025, month: 1 } },
+  { id: "loveland-2025",     name: "Loveland",     sub: "Feb-Apr 2025",   path: "/photos/trips/loveland-2025", date: { year: 2025, month: 4 } }
 ];
 
 const sortedTrips = [...trips].sort((a, b) => {
@@ -25,7 +27,12 @@ export default function TripsPage() {
       const previews = {};
       for (const trip of sortedTrips) {
         try {
-          const res = await fetch(`/api/photos?tripId=${trip.id}`);
+          const lovelandIds = ["loveland-feb-2025", "loveland-mar-2025", "loveland-apr-2025"];
+          const url =
+            trip.id === "loveland-2025"
+              ? `/api/photos?tripIds=${lovelandIds.join(",")}`
+              : `/api/photos?tripId=${trip.id}`;
+          const res = await fetch(url);
           if (!res.ok) continue;
           const data = await res.json();
           if (data.photos?.length > 0) previews[trip.id] = data.photos.slice(0, 1);
