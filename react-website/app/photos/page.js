@@ -2,84 +2,92 @@
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "./components/Navbar";
+import { motion } from "framer-motion";
+import { useRef } from "react";
 
-const featuredTrips = [
-  { id: "japan-2025", name: "JAPAN 2025", path: "/photos/trips/japan-2025" },
-  {
-    id: "loveland-feb-2025",
-    name: "LOVELAND FEB 2025",
-    path: "/photos/trips/loveland-feb-2025",
-  },
-  {
-    id: "loveland-apr-2025",
-    name: "LOVELAND APR 2025",
-    path: "/photos/trips/loveland-apr-2025",
-  },
+const trips = [
+  { id: "japan-2025",        name: "Japan",    sub: "2025",     path: "/photos/trips/japan-2025",        cover: "/images/trips/japan-2025/1-0704401-R2-032-14A.jpg" },
+  { id: "loveland-apr-2025", name: "Loveland", sub: "Apr 2025", path: "/photos/trips/loveland-apr-2025", cover: "/images/trips/loveland-apr-2025/1-0704401-R5-071-34.jpg" },
+  { id: "loveland-mar-2025", name: "Loveland", sub: "Mar 2025", path: "/photos/trips/loveland-mar-2025", cover: "/images/trips/loveland-mar-2025/0704401_0704401-R5-041-19.jpg" },
+  { id: "loveland-feb-2025", name: "Loveland", sub: "Feb 2025", path: "/photos/trips/loveland-feb-2025", cover: "/images/trips/loveland-feb-2025/0704401_0704401-R3-051-24.jpg" },
 ];
 
 export default function PhotosPage() {
-  return (
-    <div className="fixed inset-0 bg-white overflow-hidden">
-      <Navbar />
-      <div className="h-full flex flex-col items-center justify-center">
-        <h1 className="text-[20vw] font-light tracking-tighter text-gray-900 leading-none flex">
-          {"PHOTOS".split("").map((letter, index) => (
-            <span
-              key={index}
-              className="inline-block"
-              style={{
-                animation: `float 2s ease-in-out ${index * 0.1}s infinite`,
-                userSelect: "none",
-              }}
-            >
-              {letter}
-            </span>
-          ))}
-        </h1>
-        <div className="relative">
-          <p
-            className="mt-8 text-lg text-gray-600 max-w-md text-center"
-            style={{ userSelect: "none" }}
-          >
-            Recently got my hands on a film camera.
-            <br />
-            Here&apos;s what I&apos;ve been capturing.
-          </p>
-          <div
-            className="absolute -right-12 top-[80%] w-40 h-40"
-            style={{ userSelect: "none" }}
-          >
-            <Image
-              src="/images/hand-drawn-arrow.png"
-              alt="Hand drawn arrow"
-              width={160}
-              height={160}
-              className="w-full h-full object-contain"
-              draggable="false"
-            />
-          </div>
-        </div>
-        <div className="mt-24">
-          <Link
-            href="/photos/trips"
-            className="inline-block px-6 py-2 rounded-full bg-gray-900 text-white hover:bg-gray-700 transition-colors duration-300"
-          >
-            View All
-          </Link>
-        </div>
-      </div>
+  const scrollRef = useRef(null);
 
-      <style jsx>{`
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-20px);
-          }
-        }
-      `}</style>
+  return (
+    <div className="min-h-screen bg-white">
+      <Navbar />
+
+      {/* Hero */}
+      <section className="pt-32 pb-16 max-w-6xl mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <p className="font-[var(--font-outfit)] text-xs tracking-[0.22em] uppercase text-stone-400 mb-5">
+            Film Photography
+          </p>
+          <h1 className="font-[var(--font-cormorant)] font-light text-[clamp(3.5rem,10vw,7rem)] leading-[0.9] tracking-tight text-[#0D0D0D] mb-6">
+            Captured<br />
+            <span className="font-semibold italic">on film.</span>
+          </h1>
+          <p className="font-[var(--font-outfit)] text-stone-500 text-lg max-w-md mb-10">
+            Recently got my hands on a film camera. Here&apos;s what I&apos;ve been capturing.
+          </p>
+          <motion.div whileHover={{ x: 4 }} className="inline-block">
+            <Link
+              href="/photos/trips"
+              className="inline-flex items-center gap-2 font-[var(--font-outfit)] text-sm text-[#0D0D0D] border-b border-[#0D0D0D] pb-0.5"
+            >
+              View all trips
+              <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none">
+                <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </Link>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Carousel */}
+      <section className="relative pb-28">
+        {/* Fade-off gradient on the right */}
+        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-40 z-10 bg-gradient-to-l from-white to-transparent" />
+
+        <div
+          ref={scrollRef}
+          className="flex gap-5 overflow-x-auto pl-6 md:pl-[max(1.5rem,calc((100vw-72rem)/2+1.5rem))] pr-16 md:pr-40 pb-4 scrollbar-hide"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {trips.map((trip, i) => (
+            <motion.div
+              key={trip.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="flex-shrink-0 w-60 md:w-72"
+            >
+              <Link href={trip.path} className="group block">
+                <div className="relative h-96 overflow-hidden rounded-2xl bg-stone-100 mb-4">
+                  <Image
+                    src={trip.cover}
+                    alt={trip.name}
+                    fill
+                    className="object-cover transition-[transform,filter] duration-500 group-hover:scale-105 grayscale group-hover:grayscale-0"
+                    sizes="288px"
+                  />
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500" />
+                </div>
+                <div className="flex items-baseline justify-between">
+                  <span className="font-[var(--font-cormorant)] text-xl font-semibold text-[#0D0D0D]">{trip.name}</span>
+                  <span className="font-[var(--font-outfit)] text-xs text-stone-400">{trip.sub}</span>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

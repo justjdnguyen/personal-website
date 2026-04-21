@@ -30,3 +30,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# images live in R2, not git
+/public/images/
