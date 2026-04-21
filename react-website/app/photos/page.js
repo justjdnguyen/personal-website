@@ -5,11 +5,13 @@ import Navbar from "./components/Navbar";
 import { motion } from "framer-motion";
 import { useRef } from "react";
 
+const R2 = process.env.NEXT_PUBLIC_R2_URL;
+
 const trips = [
-  { id: "japan-2025",        name: "Japan",    sub: "2025",     path: "/photos/trips/japan-2025",        cover: "/images/trips/japan-2025/1-0704401-R2-032-14A.jpg" },
-  { id: "loveland-apr-2025", name: "Loveland", sub: "Apr 2025", path: "/photos/trips/loveland-apr-2025", cover: "/images/trips/loveland-apr-2025/1-0704401-R5-071-34.jpg" },
-  { id: "loveland-mar-2025", name: "Loveland", sub: "Mar 2025", path: "/photos/trips/loveland-mar-2025", cover: "/images/trips/loveland-mar-2025/0704401_0704401-R5-041-19.jpg" },
-  { id: "loveland-feb-2025", name: "Loveland", sub: "Feb 2025", path: "/photos/trips/loveland-feb-2025", cover: "/images/trips/loveland-feb-2025/0704401_0704401-R3-051-24.jpg" },
+  { id: "japan-2025",        name: "Japan",    sub: "2025",     path: "/photos/trips/japan-2025",        cover: `${R2}/trips/japan-2025/thumbs/1-0704401-R2-032-14A.webp` },
+  { id: "loveland-apr-2025", name: "Loveland", sub: "Apr 2025", path: "/photos/trips/loveland-apr-2025", cover: `${R2}/trips/loveland-apr-2025/thumbs/1-0704401-R5-071-34.webp` },
+  { id: "loveland-mar-2025", name: "Loveland", sub: "Mar 2025", path: "/photos/trips/loveland-mar-2025", cover: `${R2}/trips/loveland-mar-2025/thumbs/0704401_0704401-R5-041-19.webp` },
+  { id: "loveland-feb-2025", name: "Loveland", sub: "Feb 2025", path: "/photos/trips/loveland-feb-2025", cover: `${R2}/trips/loveland-feb-2025/thumbs/0704401_0704401-R3-051-24.webp` },
 ];
 
 export default function PhotosPage() {
