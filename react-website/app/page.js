@@ -178,7 +178,7 @@ function HeroSection() {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 0.4], [0, -120]);
 
-  const words = ["Cloud Platform Engineer", "Full Stack Developer", "AWS Architect", "Automation Builder"];
+  const words = ["Cloud Platform Engineer", "Full Stack Developer", "AWS Architect", "Automation Builder"]; // eslint-disable-line react-hooks/exhaustive-deps
   const [wordIdx, setWordIdx] = useState(0);
   const [displayed, setDisplayed] = useState("");
   const [typing, setTyping] = useState(true);
@@ -372,7 +372,7 @@ function AboutSection() {
           <div className="space-y-6">
             <Reveal delay={0.1}>
               <p className="font-[var(--font-outfit)] text-lg leading-relaxed text-stone-600">
-                I'm a <span className="text-[#0D0D0D] font-medium">Cloud Platform Engineer</span> at Tokio Marine HCC in Houston, TX.
+                I&apos;m a <span className="text-[#0D0D0D] font-medium">Cloud Platform Engineer</span> at Tokio Marine HCC in Houston, TX.
                 I hold a B.Sc. in Computer Science from The University of Texas at Dallas and have been writing
                 code since a sophomore class in 2017.
               </p>
@@ -674,7 +674,7 @@ function ContactSection() {
         <Reveal>
           <p className="text-xs tracking-[0.22em] uppercase text-stone-500 font-[var(--font-outfit)] mb-6">Contact</p>
           <h2 className="font-[var(--font-cormorant)] font-light text-[clamp(3rem,7vw,5rem)] text-white leading-tight mb-8">
-            Let's build something<br />
+            Let&apos;s build something<br />
             <span className="font-semibold italic">together.</span>
           </h2>
           <p className="font-[var(--font-outfit)] text-stone-400 text-lg mb-12 max-w-xl mx-auto">

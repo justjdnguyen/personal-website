@@ -34,7 +34,7 @@ export default function PhotosPage() {
             <span className="font-semibold italic">on film.</span>
           </h1>
           <p className="font-[var(--font-outfit)] text-stone-500 text-lg max-w-md mb-10">
-            Recently got my hands on a film camera. Here's what I've been capturing.
+            Recently got my hands on a film camera. Here&apos;s what I&apos;ve been capturing.
           </p>
           <motion.div whileHover={{ x: 4 }} className="inline-block">
             <Link

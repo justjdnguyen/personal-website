@@ -67,12 +67,14 @@ export default function TripsPage() {
               >
                 <div className="flex items-center gap-8">
                   {/* Thumbnail */}
-                  <div className="w-16 h-16 rounded-lg overflow-hidden bg-stone-100 flex-shrink-0">
+                  <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-stone-100 flex-shrink-0">
                     {tripPreviews[trip.id]?.[0] ? (
-                      <img
-                        src={tripPreviews[trip.id][0].src}
+                      <Image
+                        src={tripPreviews[trip.id][0].thumb || tripPreviews[trip.id][0].src}
                         alt=""
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-[filter] duration-500"
+                        fill
+                        className="object-cover grayscale group-hover:grayscale-0 transition-[filter] duration-500"
+                        sizes="64px"
                       />
                     ) : (
                       <div className="w-full h-full bg-stone-100" />
