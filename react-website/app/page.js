@@ -178,7 +178,7 @@ function HeroSection() {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 0.4], [0, -120]);
 
-  const words = ["Cloud Platform Engineer", "Full Stack Developer", "AWS Architect", "Automation Builder"]; // eslint-disable-line react-hooks/exhaustive-deps
+  const words = ["Software Engineer", "Data Engineer", "Full Stack Developer", "Cloud Platform Engineer"]; // eslint-disable-line react-hooks/exhaustive-deps
   const [wordIdx, setWordIdx] = useState(0);
   const [displayed, setDisplayed] = useState("");
   const [typing, setTyping] = useState(true);
@@ -228,7 +228,7 @@ function HeroSection() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-stone-400 text-sm tracking-[0.2em] uppercase mb-6 font-[var(--font-outfit)]"
             >
-              Houston, TX
+              Austin, TX
             </motion.p>
 
             <motion.h1
@@ -372,16 +372,16 @@ function AboutSection() {
           <div className="space-y-6">
             <Reveal delay={0.1}>
               <p className="font-[var(--font-outfit)] text-lg leading-relaxed text-stone-600">
-                I&apos;m a <span className="text-[#0D0D0D] font-medium">Cloud Platform Engineer</span> at Tokio Marine HCC in Houston, TX.
+                I&apos;m a <span className="text-[#0D0D0D] font-medium">Software Engineer</span> at Visa in Austin, TX.
                 I hold a B.Sc. in Computer Science from The University of Texas at Dallas and have been writing
                 code since a sophomore class in 2017.
               </p>
             </Reveal>
             <Reveal delay={0.15}>
               <p className="font-[var(--font-outfit)] text-lg leading-relaxed text-stone-600">
-                I build cloud infrastructure, multi-agent automation pipelines, and the occasional full-stack web app.
-                My work spans AWS, Terraform, Python, and everything in between — with a focus on making systems
-                cheaper, faster, and safer.
+                At Visa, I build software for global payments infrastructure. Before that, I spent two years as a
+                cloud platform engineer — designing automation pipelines, migrating workloads, and making AWS
+                environments cheaper, faster, and safer.
               </p>
             </Reveal>
             <Reveal delay={0.2}>
@@ -414,10 +414,18 @@ function AboutSection() {
 function ExperienceSection() {
   const experiences = [
     {
+      title: "Software Engineer",
+      company: "Visa",
+      period: "Jun 2026 – Present",
+      location: "Austin, TX",
+      bullets: ["Working on the Finance Technology team to build a new platform for Visa's revenue reporting and analytics."],
+      tags: ["Python", "SQL", "Spark", "Data Engineering"],
+    },
+    {
       title: "Cloud Platform Engineer",
       sub: "Associate Cloud Platform Engineer (Jan 2025 – Mar 2026)",
       company: "Tokio Marine HCC",
-      period: "Jan 2025 – Present",
+      period: "Jan 2025 – Jun 2026",
       location: "Houston, TX",
       bullets: [
         "Developed a multi-agent automation pipeline to detect, classify, remediate, and audit cloud security misconfigurations with CI/CD-driven deployments and automated audit artifact generation.",
@@ -674,11 +682,11 @@ function ContactSection() {
         <Reveal>
           <p className="text-xs tracking-[0.22em] uppercase text-stone-500 font-[var(--font-outfit)] mb-6">Contact</p>
           <h2 className="font-[var(--font-cormorant)] font-light text-[clamp(3rem,7vw,5rem)] text-white leading-tight mb-8">
-            Let&apos;s build something<br />
-            <span className="font-semibold italic">together.</span>
+            Say<br />
+            <span className="font-semibold italic">hello.</span>
           </h2>
           <p className="font-[var(--font-outfit)] text-stone-400 text-lg mb-12 max-w-xl mx-auto">
-            Open to interesting problems in cloud infrastructure, automation, and full-stack development.
+            Feel free to reach out — happy to connect about software, side projects, or anything interesting.
           </p>
         </Reveal>
 
@@ -742,7 +750,7 @@ function Footer() {
           © {new Date().getFullYear()} Jimmy Nguyen
         </p>
         <p className="font-[var(--font-outfit)] text-xs text-stone-700 italic font-[var(--font-cormorant)]">
-          Houston, TX
+          Austin, TX
         </p>
       </div>
     </footer>
